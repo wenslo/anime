@@ -27,6 +27,7 @@
     </insert>
     <update id="updateLog" parameterType="org.wen.entity.Log">
         update log l set l.name=#{name},l.common=#{common},l.project_name=#{projectName},l.create_date=#{createDate},l.update_date=#{updateDate},l.state=#{state}
+            where l.id = #{id}
     </update>
     <delete id="deleteLog" parameterType="int">
         delete from log l where l.id = #{_parameter}
