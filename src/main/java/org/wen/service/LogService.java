@@ -21,7 +21,7 @@ public interface LogService {
      * 查看详情，根据ID查找出对应的内容以便于观看
      * @return
      */
-    Log queryOne();
+    Log queryOne(int id);
     /**
      * 搜索日志的方法
      * @param username
@@ -37,8 +37,8 @@ public interface LogService {
     int saveLog(Log log);
     /**
      * 修改日志
-     * @param log  需要修改的实体类
+     * @param id  需要修改的实体类
      * @return
      */
-    int updateLog(Log log);
+    int updateLog(int id);
 }

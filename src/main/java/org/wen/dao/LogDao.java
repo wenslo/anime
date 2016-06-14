@@ -4,6 +4,7 @@ import org.wen.entity.Log;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 关于日志表的DAO层
@@ -28,7 +29,7 @@ public interface LogDao {
      * @param createDate 创建时间
      * @return
      */
-    List<Log> queryByCondition(String username, String common, Date createDate);
+    List<Log> queryByCondition(Map map);
     /**
      * 需要有个增加的方法
      * @param log
