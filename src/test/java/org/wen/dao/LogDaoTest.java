@@ -13,17 +13,17 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * ÅäÖÃspringºÍjunitÕûºÏ,junitÆô¶¯Ê±¼ÓÔØspringIOCÈİÆ÷
- * LogDaoµÄ²âÊÔÀà
- * ²âÊÔDAO·½·¨ÊÇ·ñ¿ÉĞĞ
- * 2016Äê6ÔÂ13ÈÕ23:29:10
+ * ï¿½ï¿½ï¿½ï¿½springï¿½ï¿½junitï¿½ï¿½ï¿½ï¿½,junitï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½springIOCï¿½ï¿½ï¿½ï¿½
+ * LogDaoï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½
+ * ï¿½ï¿½ï¿½ï¿½DAOï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
+ * 2016ï¿½ï¿½6ï¿½ï¿½13ï¿½ï¿½23:29:10
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-//¸æËßjunit springÅäÖÃÎÄ¼ş
+//ï¿½ï¿½ï¿½ï¿½junit springï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 @ContextConfiguration({"classpath:spring/spring-dao.xml"})
 public class LogDaoTest {
 
-    //×¢ÈëDaoÊµÏÖÀà
+
     @Resource
     private LogDao logDao;
 

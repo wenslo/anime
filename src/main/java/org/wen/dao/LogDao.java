@@ -7,44 +7,41 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 关于日志表的DAO层
- * 2016年6月6日21:38:40
- * 温海林
+ * 锟斤拷锟斤拷锟斤拷志锟斤拷锟紻AO锟斤拷
+ * 2016锟斤拷6锟斤拷6锟斤拷21:38:40
+ * 锟铰猴拷锟斤拷
  */
 public interface LogDao {
     /**
-     * 需要有一个能够查找出所有的日志记录的方法
+     * 锟斤拷要锟斤拷一锟斤拷锟杰癸拷锟斤拷锟揭筹拷锟斤拷锟叫碉拷锟斤拷志锟斤拷录锟侥凤拷锟斤拷
      * @return
      */
     List<Log> queryAll();
     /**
-     * 需要有查看单独一个的方法，以便用于查看详情
+     * 锟斤拷要锟叫查看锟斤拷锟斤拷一锟斤拷锟侥凤拷锟斤拷锟斤拷锟皆憋拷锟斤拷锟节查看锟斤拷锟斤拷
      * @return
      */
     Log queryById(int id);
     /**
-     * 需要有一个查询方法
-     * @param username 姓名
-     * @param common 内容
-     * @param createDate 创建时间
+     * 锟斤拷要锟斤拷一锟斤拷锟斤拷询锟斤拷锟斤拷
      * @return
      */
     List<Log> queryByCondition(Map map);
     /**
-     * 需要有个增加的方法
+     * 锟斤拷要锟叫革拷锟斤拷锟接的凤拷锟斤拷
      * @param log
      * @return
      */
     void saveLog(Log log);
     /**
-     * 徐璈一个修改的方法
+     * 锟斤拷H一锟斤拷锟睫改的凤拷锟斤拷
      * @param id
      * @param log
      * @return
      */
     int updateLog(int id, Log log);
     /**
-     * 需要有一个删除日志的方法
+     * 锟斤拷要锟斤拷一锟斤拷删锟斤拷锟斤拷志锟侥凤拷锟斤拷
      * @param id
      * @return
      */
