@@ -15,4 +15,14 @@ public interface UserService {
      * @return
      */
     public Result regUser(String name,String pwd);
+
+    /**
+     * 用户index页面的登录功能
+     * 2016年6月22日20:56:08
+     * 温海林
+     * @param name
+     * @param pwd
+     * @return
+     */
+    public Result login(String name, String pwd);
 }

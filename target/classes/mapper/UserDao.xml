@@ -6,4 +6,7 @@
     <insert id="reg" parameterType="org.wen.entity.User">
         insert into user (name,password) values(#{name},#{pwd})
     </insert>
+    <select id="login" parameterType="org.wen.entity.User" resultType="org.wen.entity.User">
+        select id,name from user u where u.name = #{name} and u.password = #{pwd}
+    </select>
 </mapper>

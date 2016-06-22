@@ -7,7 +7,7 @@ public class User {
     private Integer id;
     private String name;
     private String pwd;
-
+    public User(){}
     @Override
     public String toString() {
         return "User{" +

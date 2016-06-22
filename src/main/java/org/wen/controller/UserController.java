@@ -46,4 +46,23 @@ public class UserController {
         model.addAttribute("result",result);
         return result;
     }
+
+    /**
+     * 用户页面的登录功能
+     * 2016年6月22日20:55:17
+     * 温海林
+     * @param name  帐号
+     * @param pwd 密码
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/login",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Result log(String name,String pwd,Model model){
+        log.info("<提示>：进入登录方法");
+        Result result = userService.login(name,pwd);
+        log.info("<提示>"+result.toString());
+        model.addAttribute("result",result);
+        return result;
+    }
 }
