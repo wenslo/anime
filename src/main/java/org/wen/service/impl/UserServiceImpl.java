@@ -8,10 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.wen.dao.UserDao;
 import org.wen.dto.Result;
+import org.wen.entity.DataGrid;
 import org.wen.entity.User;
 import org.wen.service.UserService;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户模块的实现
@@ -55,6 +60,18 @@ public class UserServiceImpl implements UserService {
             result.setMessage("用户名或者密码不正确！");
         }
         return result;
+    }
+
+    public DataGrid datagrid(String name,int page,int rows) {
+        DataGrid dg = new DataGrid();
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("name",name);
+        params.put("page",page-1);
+        params.put("rows",rows);
+        List<User> l = userDao.find(params);
+        dg.setTotal(userDao.count(params));
+        dg.setRows(l);
+        return dg;
     }
 
     public String getMd5(String base){

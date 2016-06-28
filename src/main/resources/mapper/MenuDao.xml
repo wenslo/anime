@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wen.dao.MenuDao">
+    <select id="findFirst" resultType="org.wen.entity.Tmenu">
+        select * from tmenu t where t.pid is null
+    </select>
+    <select id="findByPid" parameterType="java.lang.String" resultType="org.wen.entity.Tmenu">
+        select * from Tmenu t where t.pid = #{_parameter}
+    </select>
+    <select id="findById" parameterType="java.lang.String" resultType="org.wen.entity.Tmenu">
+        select * from Tmenu t where t.id = #{_parameter}
+    </select>
+    <select id="findAll"  resultType="org.wen.entity.Tmenu">
+        select * from Tmenu t
+    </select>
+</mapper>

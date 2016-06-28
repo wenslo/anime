@@ -1,6 +1,7 @@
 package org.wen.service;
 
 import org.wen.dto.Result;
+import org.wen.entity.DataGrid;
 
 /**
  * 用户的业务功能
@@ -25,4 +26,5 @@ public interface UserService {
      * @return
      */
     public Result login(String name, String pwd);
+    public DataGrid datagrid(String name,int page,int rows);
 }

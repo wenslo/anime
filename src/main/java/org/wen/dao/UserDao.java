@@ -3,6 +3,8 @@ package org.wen.dao;
 import org.wen.entity.User;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户模块对应的DAO方法
@@ -20,4 +22,18 @@ public interface UserDao {
      * @param user
      */
     public User login(User user);
+
+    /**
+     * 查询用户管理页面所需数据
+     * @param map
+     * @return
+     */
+    public List<User> find(Map map);
+
+    /**
+     * 查询总数
+     * @param map
+     * @return
+     */
+    public Long count(Map map);
 }

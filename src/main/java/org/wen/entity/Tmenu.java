@@ -1,55 +1,46 @@
 package org.wen.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
  * 树列表实体
  */
 public class Tmenu {
-    private Integer id;
-    private Tmenu tmenu;
+    private String id;
+    private String pid;
     private String text;
     private String iconcls;
     private String url;
-    private Set<Tmenu> tmenus = new HashSet<Tmenu>();
     public Tmenu(){}
-
-    public Tmenu(Integer id, Tmenu tmenu, String text, String iconcls, String url, Set<Tmenu> tmenus) {
-        this.id = id;
-        this.tmenu = tmenu;
-        this.text = text;
-        this.iconcls = iconcls;
-        this.url = url;
-        this.tmenus = tmenus;
-    }
 
     @Override
     public String toString() {
         return "Tmenu{" +
-                "id=" + id +
-                ", tmenu=" + tmenu +
+                "id='" + id + '\'' +
+                ", pid='" + pid + '\'' +
                 ", text='" + text + '\'' +
                 ", iconcls='" + iconcls + '\'' +
                 ", url='" + url + '\'' +
-                ", tmenus=" + tmenus +
                 '}';
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Tmenu getTmenu() {
-        return tmenu;
+    public String getPid() {
+        return pid;
     }
 
-    public void setTmenu(Tmenu tmenu) {
-        this.tmenu = tmenu;
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 
     public String getText() {
@@ -74,13 +65,5 @@ public class Tmenu {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Set<Tmenu> getTmenus() {
-        return tmenus;
-    }
-
-    public void setTmenus(Set<Tmenu> tmenus) {
-        this.tmenus = tmenus;
     }
 }

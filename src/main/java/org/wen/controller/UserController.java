@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.wen.dto.Result;
+import org.wen.entity.DataGrid;
 import org.wen.service.UserService;
 
 /**
@@ -64,5 +65,11 @@ public class UserController {
         log.info("<提示>"+result.toString());
         model.addAttribute("result",result);
         return result;
+    }
+    @RequestMapping(value = "/datagrid",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public DataGrid datagrid(String name,int page,int rows,Model model){
+        log.info("<提示>：进入用户管理页面的方法");
+        return userService.datagrid(name,page,rows);
     }
 }
