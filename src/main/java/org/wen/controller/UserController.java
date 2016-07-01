@@ -72,4 +72,13 @@ public class UserController {
         log.info("<提示>：进入用户管理页面的方法");
         return userService.datagrid(name,page,rows);
     }
+    @RequestMapping(value = "/add",produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Result add(String name,String pwd,Model model){
+        log.info("<提示>：进入新增用户方法");
+        Result result = userService.regUser(name,pwd);
+        log.info("<提示>"+result.toString());
+        model.addAttribute("result", result);
+        return result;
+    }
 }

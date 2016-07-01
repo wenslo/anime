@@ -10,16 +10,17 @@
         select id,name from user u where u.name = #{name} and u.password = #{pwd}
     </select>
     <select id="find" parameterType="map" resultType="org.wen.entity.User">
-        select id,name,password as 'pwd' from user u  limit #{page},#{rows}
+        select id,name,password as 'pwd' from user u <include refid="user_search"/> limit #{page},#{rows}
     </select>
     <select id="count" parameterType="map" resultType="long">
         select count(*) from user u
     </select>
     <sql id="user_search">
         <where>
-            <if test="name != null and name != ''}">
-                and u.name like '%'+#{name}+'%'
+            <if test="name != null and name != ''">
+                and u.name like '%'||#{name}||'%'
             </if>
+            <!-- '%'||#{name}||'%' -->
         </where>
     </sql>
 </mapper>
