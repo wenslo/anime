@@ -36,4 +36,11 @@ public interface UserDao {
      * @return
      */
     public Long count(Map map);
+
+    /**
+     * 根据页面传入的ID进行用户的删除
+     * @param ids
+     * @return
+     */
+    int deleteById(List<Long> ids);
 }

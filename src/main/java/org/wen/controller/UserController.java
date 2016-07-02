@@ -42,10 +42,18 @@ public class UserController {
     @ResponseBody
     public Result reg(String name,String pwd,Model model){
         log.info("<提示>：进入注册方法");
-        Result result = userService.regUser(name,pwd);
-        log.info("<提示>"+result.toString());
-        model.addAttribute("result",result);
-        return result;
+        Result result = null;
+        try {
+            result = userService.regUser(name,pwd);
+            log.info("<提示>"+result.toString());
+            model.addAttribute("result",result);
+            return result;
+        }catch (Exception e){
+            log.error("违反唯一约束！");
+            result.setResult(2);
+            result.setMessage("注册失败！");
+            return result;
+        }
     }
 
     /**
@@ -76,9 +84,33 @@ public class UserController {
     @ResponseBody
     public Result add(String name,String pwd,Model model){
         log.info("<提示>：进入新增用户方法");
-        Result result = userService.regUser(name,pwd);
-        log.info("<提示>"+result.toString());
-        model.addAttribute("result", result);
+        Result result = null;
+        try {
+           result = userService.regUser(name,pwd);
+            result.setMessage("新增用户成功！");
+            log.info("<提示>"+result.toString());
+            model.addAttribute("result",result);
+            return result;
+        }catch (Exception e){
+            log.error("违反唯一约束！");
+            result.setResult(2);
+            result.setMessage("违反唯一约束！");
+            return result;
+        }
+    }
+
+    /**
+     * 删除用户
+     * 2016年7月2日18:20:53
+     * 温海林
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "/delete",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Result delete(String ids){
+        log.info("<提示>：进入删除用户方法");
+        Result result = userService.deleteUser(ids);
         return result;
     }
 }

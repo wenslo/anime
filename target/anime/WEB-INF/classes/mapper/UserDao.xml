@@ -15,6 +15,12 @@
     <select id="count" parameterType="map" resultType="long">
         select count(*) from user u
     </select>
+    <delete id="deleteById" parameterType="java.util.List">
+        delete from user where id in
+        <foreach item="ids" index="index" collection="list" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
     <sql id="user_search">
         <where>
             <if test="name != null and name != ''">

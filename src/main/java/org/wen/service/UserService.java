@@ -27,4 +27,5 @@ public interface UserService {
      */
     public Result login(String name, String pwd);
     public DataGrid datagrid(String name,int page,int rows);
+    public Result deleteUser(String ids);
 }

@@ -18,6 +18,7 @@
             {field:'id',
                 title:'编号',
                 width:100,
+                checkbox : true,
                 sortable:true
             }, {field:'name',
                 title:'登录名称',
@@ -54,7 +55,7 @@
                 text:'删除',
                 iconCls:'icon-remove',
                 handler:function(){
-
+                    remove();
                 }
             },'-',{
                 text:'修改',
@@ -76,6 +77,41 @@
     function append(){
         $('#jsp_amdin_yhgl_addForm input').val('');
         $("#jsp_admin_yhgl_addDialog").dialog('open');
+    }
+    function remove(){
+        var rows = $('#jsp_admin_yhgl_datagrid').datagrid('getChecked');
+        var ids = [];
+        alert(rows.length);
+        if(rows.length>0){
+            $.messager.confirm('确认','您是否要删除当前选中的项目？',function(r){
+                if(r){
+                    for(var i=0;i<rows.length;i++){
+                        ids.push([rows[i].id]);
+                    }
+                    $.ajax({
+                        url : '${pageContext.request.contextPath}/user/delete',
+                        type:'POST',
+                        data:{
+                            ids:ids.join(',')
+                        },
+                        dataType:'json',
+                        success:function(r){
+                            $('#jsp_admin_yhgl_datagrid').datagrid('load');
+                            $('#jsp_admin_yhgl_datagrid').datagrid('unselectAll');
+                            $.messager.show({
+                                title:'提示',
+                                msg:r.message
+                            });
+                        }
+                    });
+                }
+            });
+        }else{
+            $.messager.show({
+                title:'提示',
+                msg:'请选择要删除的项目！'
+            });
+        }
     }
 </script>
 <div id="jsp_admin_yhgl_layout" class="easyui-layout" data-options="fit:true,border:false">
@@ -99,10 +135,12 @@
                     $('#jsp_amdin_yhgl_addForm').form('submit',{
                         url:'${pageContext.request.contextPath}/user/add',
                         success:function(r){
-                            alert(123);
                             var obj = jQuery.parseJSON(r);
-                            if(obj.success){
-                                $('#jsp_admin_yhgl_datagrid').datagrid('load');
+                            if(obj.result == 1){
+                                $('#jsp_admin_yhgl_datagrid').datagrid('insertRow',{
+                                    index:0,
+                                    row:obj.data
+                                });
                                 $('#jsp_admin_yhgl_addDialog').dialog('close');
                             }
                             $.messager.show({
@@ -112,7 +150,7 @@
                         }
                     });
                 }
-            }]" class="easyui-dialog" style="width: 600px;height: 600px;">
+            }]" class="easyui-dialog" style="width: 418px;height: 102px;">
     <form id="jsp_amdin_yhgl_addForm">
         <table>
             <tr>

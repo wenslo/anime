@@ -30,20 +30,17 @@ public class UserServiceImpl implements UserService {
     public Result regUser(String name, String pwd) {
         Result result = new Result();
         User user = new User(name,getMd5(pwd));
-        try {
-            int flag  = userDao.reg(user);
-            if(flag > 0){
-                result.setResult(1);
-                result.setMessage("注册成功！");
-                return result;
-            }
-        }catch (Exception e){
-            log.error("违反唯一约束！");
-            result.setResult(2);
-            result.setMessage("注册失败！");
+        int flag  = userDao.reg(user);
+        if(flag > 0){
+            User customer = new User();
+            customer.setName(name);
+            customer.setPwd(getMd5(pwd));
+            customer.setId(flag);
+            result.setResult(1);
+            result.setMessage("注册成功！");
+            result.setData(customer);
             return result;
         }
-
         return null;
     }
 
@@ -72,6 +69,19 @@ public class UserServiceImpl implements UserService {
         dg.setTotal(userDao.count(params));
         dg.setRows(l);
         return dg;
+    }
+
+    public Result deleteUser(String ids) {
+        Result result = new Result();
+        String[] id = ids.split(",");
+        ArrayList<Long> list = new ArrayList<Long>();
+        for(String number :id){
+            list.add(Long.parseLong(number));
+        }
+        int count = userDao.deleteById(list);
+        result.setMessage("删除成功！一共删除了"+count+"条数据");
+        result.setResult(1);
+        return result;
     }
 
     public String getMd5(String base){
