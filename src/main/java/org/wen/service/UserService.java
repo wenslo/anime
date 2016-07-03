@@ -15,7 +15,7 @@ public interface UserService {
      * @param pwd
      * @return
      */
-    public Result regUser(String name,String pwd);
+    public Result regUser(String name,String pwd) throws Exception;
 
     /**
      * 用户index页面的登录功能
@@ -28,4 +28,8 @@ public interface UserService {
     public Result login(String name, String pwd);
     public DataGrid datagrid(String name,int page,int rows);
     public Result deleteUser(String ids);
+
+    public Result findUser(Long id);
+
+    public Result updateUser(Long id, String name, String pwd);
 }

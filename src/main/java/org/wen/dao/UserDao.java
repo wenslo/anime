@@ -15,7 +15,7 @@ public interface UserDao {
      * @param user
      * @return
      */
-    public int reg(User user);
+    public int reg(User user) throws Exception;
 
     /**
      * 用户登录方法
@@ -42,5 +42,9 @@ public interface UserDao {
      * @param ids
      * @return
      */
-    int deleteById(List<Long> ids);
+    public int deleteById(List<Long> ids);
+
+    public User findById(Long id);
+
+    public int updateUser(User user);
 }

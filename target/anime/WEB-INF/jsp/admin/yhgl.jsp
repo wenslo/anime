@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
     $("#jsp_admin_yhgl_datagrid").datagrid({
         url:'${pageContext.request.contextPath}/user/datagrid',
@@ -29,15 +30,15 @@
         columns:[[  {field:'pwd',
                 title:'密码',
                 width:150,
-                formater:function(value,row,index){
-                    return '<span title="'+row.name+value+'">'+value+'</span>';
+                formatter : function(value, row, index) {
+                    return '******';
                 }
-            }, {field:'createdatetime',
+            }, {field:'createDate',
                 title:'创建时间',
                 width:150,
                 align:'right',
             sortable:true
-             }, {field:'modifydatetime',
+             }, {field:'updateDate',
                 title:'最后修改时间',
                 width:100,
                 align:'right',
@@ -61,7 +62,7 @@
                 text:'修改',
                 iconCls:'icon-edit',
                 handler:function(){
-
+                    modify();
                 }
             }
 
@@ -78,10 +79,32 @@
         $('#jsp_amdin_yhgl_addForm input').val('');
         $("#jsp_admin_yhgl_addDialog").dialog('open');
     }
+    function modify(){
+        var rows = $('#jsp_admin_yhgl_datagrid').datagrid('getChecked');
+        var id = '';
+        if(rows.length>1){
+            $.messager.alert('提示','对不起，只能选择一条数据！');
+        }else if(rows.length<1){
+            $.messager.alert('提示','请至少选择一条数据！');
+        }else if(rows.length == 1){
+            id = rows[0].id;
+            $.ajax({
+                url : '${pageContext.request.contextPath}/user/'+id+'/showUpdateUser',
+                type:'POST',
+                dataType:'json',
+                success:function(r){
+                    var result = r.data;
+                    $("#jsp_admin_yhgl_updateDialog").dialog('open');
+                    $("#jsp_amdin_yhgl_updateForm_id").val(result.id);
+                    $("#jsp_amdin_yhgl_updateForm_name").val(result.name);
+//                    $("#jsp_amdin_yhgl_updateForm_pwd").val(result.pwd);
+                }
+            });
+        }
+    }
     function remove(){
         var rows = $('#jsp_admin_yhgl_datagrid').datagrid('getChecked');
         var ids = [];
-        alert(rows.length);
         if(rows.length>0){
             $.messager.confirm('确认','您是否要删除当前选中的项目？',function(r){
                 if(r){
@@ -128,36 +151,83 @@
         </table>
     </div>
 </div>
-<div id="jsp_admin_yhgl_addDialog" data-options="closed:true,modal:true,title:'添加用户',buttons:[{
-                text:'增加',
-                iconCls:'iconCls',
-                handler:function(){
-                    $('#jsp_amdin_yhgl_addForm').form('submit',{
-                        url:'${pageContext.request.contextPath}/user/add',
-                        success:function(r){
-                            var obj = jQuery.parseJSON(r);
-                            if(obj.result == 1){
-                                $('#jsp_admin_yhgl_datagrid').datagrid('insertRow',{
-                                    index:0,
-                                    row:obj.data
-                                });
-                                $('#jsp_admin_yhgl_addDialog').dialog('close');
-                            }
-                            $.messager.show({
-                                title:'提示',
-                                msg:obj.message
+<div id="jsp_admin_yhgl_addDialog" data-options="closed:true,modal:true,
+                        title:'添加用户',
+                        buttons:[{
+                        text:'增加',
+                        iconCls:'iconCls',
+                        handler:function(){
+                            $('#jsp_amdin_yhgl_addForm').form('submit',{
+                                url:'${pageContext.request.contextPath}/user/add',
+                                success:function(r){
+                                    var obj = jQuery.parseJSON(r);
+                                    if(obj.result == 1){
+                                        $('#jsp_admin_yhgl_datagrid').datagrid('insertRow',{
+                                            index:0,
+                                            row:obj.data
+                                        });
+                                        $('#jsp_admin_yhgl_addDialog').dialog('close');
+                                    }
+                                    if(obj.result == 2){
+                                        $('#jsp_admin_yhgl_addDialog').dialog('close');
+                                    }
+                                    $.messager.show({
+                                        title:'提示',
+                                        msg:obj.message
+                                    });
+                                }
                             });
                         }
-                    });
-                }
-            }]" class="easyui-dialog" style="width: 418px;height: 102px;">
+                    }]" class="easyui-dialog" style="width: 418px;height: 102px;">
     <form id="jsp_amdin_yhgl_addForm">
         <table>
             <tr>
                 <th>登录名称</th>
-                <td><input name="name" class="easyui-validatebox" data-options="required:true"/></td>
+                <td>
+                    <input id="jsp_amdin_yhgl_addForm_name" name="name" class="easyui-validatebox" data-options="required:true"/>
+                </td>
                 <th>密码</th>
-                <td><input type="password" name="pwd" class="easyui-validatebox" data-options="required:true"/></td>
+                <td><input id="jsp_amdin_yhgl_addForm_pwd" type="password" name="pwd" class="easyui-validatebox" data-options="required:true"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="jsp_admin_yhgl_updateDialog" data-options="closed:true,modal:true,
+                        title:'修改用户',
+                        buttons:[{
+                            text:'修改',
+                            iconCls:'iconCls',
+                            handler:function(){
+                                $('#jsp_amdin_yhgl_updateForm').form('submit',{
+                                    url:'${pageContext.request.contextPath}/user/update',
+                                    success:function(r){
+                                        var obj = jQuery.parseJSON(r);
+                                        if(obj.result == 1){
+                                            $('#jsp_admin_yhgl_datagrid').datagrid('load',{});
+                                            $('#jsp_admin_yhgl_updateDialog').dialog('close');
+                                        }
+                                        if(obj.result == 2){
+                                            $('#jsp_admin_yhgl_updateDialog').dialog('close');
+                                        }
+                                        $.messager.show({
+                                            title:'提示',
+                                            msg:obj.message
+                                        });
+                                    }
+                                });
+                            }
+                         }]"
+                     class="easyui-dialog" style="width: 418px;height: 102px;">
+    <form id="jsp_amdin_yhgl_updateForm" method="POST">
+        <table>
+            <tr>
+                <th>登录名称</th>
+                <td>
+                    <input type="hidden" id="jsp_amdin_yhgl_updateForm_id" name="id" value=""/>
+                    <input id="jsp_amdin_yhgl_updateForm_name" name="name" class="easyui-validatebox" data-options="required:true"/>
+                </td>
+                <th>密码</th>
+                <td><input id="jsp_amdin_yhgl_updateForm_pwd" type="password" name="pwd" class="easyui-validatebox" data-options="required:true"/></td>
             </tr>
         </table>
     </form>

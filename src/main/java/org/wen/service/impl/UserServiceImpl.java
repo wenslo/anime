@@ -13,10 +13,8 @@ import org.wen.entity.User;
 import org.wen.service.UserService;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * 用户模块的实现
@@ -27,18 +25,16 @@ public class UserServiceImpl implements UserService {
     private Logger log = LoggerFactory.getLogger(this.getClass());
     @Resource
     private UserDao userDao;
-    public Result regUser(String name, String pwd) {
+    public Result regUser(String name, String pwd) throws Exception{
         Result result = new Result();
         User user = new User(name,getMd5(pwd));
+        user.setCreateDate(new Date());
         int flag  = userDao.reg(user);
         if(flag > 0){
-            User customer = new User();
-            customer.setName(name);
-            customer.setPwd(getMd5(pwd));
-            customer.setId(flag);
+            user.setId(flag);
             result.setResult(1);
             result.setMessage("注册成功！");
-            result.setData(customer);
+            result.setData(user);
             return result;
         }
         return null;
@@ -81,6 +77,33 @@ public class UserServiceImpl implements UserService {
         int count = userDao.deleteById(list);
         result.setMessage("删除成功！一共删除了"+count+"条数据");
         result.setResult(1);
+        return result;
+    }
+
+    public Result findUser(Long id) {
+        Result result = new Result();
+        User user = userDao.findById(id);
+        log.debug("数据测试",user.toString());
+        result.setResult(1);
+        result.setData(user);
+        return result;
+    }
+
+    public Result updateUser(Long id, String name, String pwd) {
+        Result result = new Result();
+        try {
+            User user = new User(name,getMd5(pwd));
+            user.setId(Integer.parseInt(String.valueOf(id)));
+            user.setUpdateDate(new Date());
+            userDao.updateUser(user);
+            result.setMessage("修改成功！");
+            result.setData(user);
+            result.setResult(1);
+        }catch (Exception e){
+            log.error("错误！",e);
+            result.setMessage("修改失败！");
+            result.setResult(2);
+        }
         return result;
     }
 

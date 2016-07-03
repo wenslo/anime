@@ -84,15 +84,16 @@ public class UserController {
     @ResponseBody
     public Result add(String name,String pwd,Model model){
         log.info("<提示>：进入新增用户方法");
-        Result result = null;
+        Result result = new Result();
         try {
-           result = userService.regUser(name,pwd);
+            result = userService.regUser(name,pwd);
             result.setMessage("新增用户成功！");
             log.info("<提示>"+result.toString());
             model.addAttribute("result",result);
             return result;
         }catch (Exception e){
-            log.error("违反唯一约束！");
+            log.error("错误！",e);
+            log.error("用户名已经存在！");
             result.setResult(2);
             result.setMessage("违反唯一约束！");
             return result;
@@ -111,6 +112,33 @@ public class UserController {
     public Result delete(String ids){
         log.info("<提示>：进入删除用户方法");
         Result result = userService.deleteUser(ids);
+        return result;
+    }
+    /**
+     * 显示出需要修改的用户
+     * 2016年7月3日11:24:58
+     * 温海林
+     * @param id 需要修改的用户的ID
+     * @return
+     */
+    @RequestMapping(value = "{id}/showUpdateUser",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Result showUpdateUser(@PathVariable Long id,Model model){
+        log.info("<提示>：进入展示需要修改用户方法");
+        Result result = userService.findUser(id);
+        return result;
+    }
+    /**
+     * 修改用户
+     * 2016年7月3日12:12:44
+     * 温海林
+     * @return
+     */
+    @RequestMapping(value = "/update",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Result update(Long id,String name,String pwd,Model model){
+        log.info("<提示>：进入展示需要修改用户方法");
+        Result result = userService.updateUser(id,name,pwd);
         return result;
     }
 }
