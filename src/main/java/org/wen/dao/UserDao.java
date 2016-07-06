@@ -3,6 +3,7 @@ package org.wen.dao;
 import org.wen.entity.User;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +45,31 @@ public interface UserDao {
      */
     public int deleteById(List<Long> ids);
 
+    /**
+     * 根据传入的ID寻找对应的用户
+     * @param id
+     * @return
+     */
     public User findById(Long id);
 
+    /**
+     * 修改用户
+     * @param user
+     * @return
+     */
     public int updateUser(User user);
+
+    /**
+     * 根据多个ID查询数据
+     * @param list ID的List
+     * @return
+     */
+    List<User> findByIds(ArrayList<Long> list);
+
+    /**
+     * 查询所有的用户
+     * 2016年7月6日21:49:00
+     * @return
+     */
+    List<User> findAll();
 }

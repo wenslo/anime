@@ -64,6 +64,12 @@
                 handler:function(){
                     modify();
                 }
+            },'-',{
+                text:'导出',
+                iconCls:'icon-more',
+                handler:function(){
+                    excelExport();
+                }
             }
 
         ]
@@ -134,6 +140,22 @@
                 title:'提示',
                 msg:'请选择要删除的项目！'
             });
+        }
+    }
+    function excelExport(){
+        var rows = $('#jsp_admin_yhgl_datagrid').datagrid('getChecked');
+        var ids = "";
+        if(rows.length==0){
+            $.messager.confirm('提示','生成数据可能需要一段时间，请耐心等待！',function(r){
+                if(r){
+                    document.location = "${pageContext.request.contextPath}/user/excelExport";
+                }
+            });
+        }else{
+            for(var i=0;i<rows.length;i++){
+                ids += rows[i].id+",";
+            }
+            document.location = "${pageContext.request.contextPath}/user/excelExport?ids="+ids;
         }
     }
 </script>

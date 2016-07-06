@@ -27,6 +27,15 @@
     <update id="updateUser" parameterType="org.wen.entity.User">
         update user u set u.name = #{name},u.password = #{pwd} where u.id = #{id}
     </update>
+    <select id="findByIds" resultType="org.wen.entity.User" parameterType="java.util.List">
+        select id,name,password as 'pwd',createDate,updateDate from user where id in
+        <foreach collection="list" item="ids" index="index" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </select>
+    <select id="findAll" resultType="org.wen.entity.User">
+        select id,name,password as 'pwd',createDate,updateDate from user
+    </select>
     <sql id="user_search">
         <where>
             <if test="name != null and name != ''">

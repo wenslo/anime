@@ -3,6 +3,9 @@ package org.wen.service;
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 用户的业务功能
  * 2016年6月19日21:27:06
@@ -32,4 +35,6 @@ public interface UserService {
     public Result findUser(Long id);
 
     public Result updateUser(Long id, String name, String pwd);
+
+    public List<Map<String,Object>> queryMap(String ids);
 }

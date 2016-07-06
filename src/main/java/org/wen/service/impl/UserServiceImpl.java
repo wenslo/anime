@@ -107,6 +107,42 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    public List<Map<String, Object>> queryMap(String ids) {
+        if("quanbu".equals(ids)){
+            List<User> users = userDao.findAll();
+            List<Map<String, Object>> original = dataWrite(users);
+            return original;
+        }
+        String userId = ids.substring(0,ids.lastIndexOf(","));
+        String[] id = ids.split(",");
+        ArrayList<Long> list = new ArrayList<Long>();
+        for(String number :id){
+            list.add(Long.parseLong(number));
+        }
+        List<User> users = userDao.findByIds(list);
+        List<Map<String, Object>> original = dataWrite(users);
+        return original;
+    }
+
+    /**
+     * 用于Excel导出的数据封装
+     * @param users
+     * @return
+     */
+    public List<Map<String, Object>> dataWrite(List<User> users) {
+        List<Map<String,Object>> original = new ArrayList<Map<String, Object>>();
+        for(User u :users){
+            Map<String,Object > map = new HashMap<String, Object>();
+            map.put("id",u.getId());
+            map.put("name",u.getName());
+            map.put("pwd",u.getPwd());
+            map.put("createDate",u.getCreateDate());
+            map.put("updateDate",u.getUpdateDate());
+            original.add(map);
+        }
+        return original;
+    }
+
     public String getMd5(String base){
         String md5 = DigestUtils.md5DigestAsHex(base.getBytes());
         return md5;
