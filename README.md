@@ -1,4 +1,3 @@
-Learn git for work feature
-============
-first us git to learn InteraIDEA and Spring SpringMVC MyBatis
-
+### practice for SSM
+---
+As you can see,the project use the framework has a spring springMVC MyBatis Maven
