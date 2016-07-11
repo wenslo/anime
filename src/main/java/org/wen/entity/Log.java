@@ -1,11 +1,11 @@
 package org.wen.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
- * ÈÕÖ¾ÊµÌåÀà
- * 2016Äê6ÔÂ6ÈÕ21:35:37
- * ÎÂº£ÁÖ
+ * æ—¥å¿—å®ä½“
  */
 public class Log {
     /**
@@ -13,30 +13,37 @@ public class Log {
      */
     private Integer id;
     /**
-     * ĞÕÃû
+     * åå­—
      */
     private String name;
     /**
-     * ÈÕÖ¾ÄÚÈİ
+     * å†…å®¹
      */
     private String common;
     /**
-     * ÏîÄ¿Ãû³Æ
+     * é¡¹ç›®åç§°
      */
     private String projectName;
     /**
-     * ´´½¨Ê±¼ä
+     * åˆ›å»ºæ—¶é—´
      */
     private Date createDate;
     /**
-     * ĞŞ¸ÄÊ±¼ä
+     * ä¿®æ”¹æ—¶é—´
      */
     private Date updateDate;
     /**
-     * ×´Ì¬
+     * çŠ¶æ€
      */
     private String state;
 
+    public Log(String name, String common, String projectName, Date createDate) {
+        this.name = name;
+        this.common = common;
+        this.projectName = projectName;
+        this.createDate = createDate;
+    }
+    public Log(){}
     @Override
     public String toString() {
         return "Log{" +
@@ -81,7 +88,7 @@ public class Log {
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
-
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Date getCreateDate() {
         return createDate;
     }
@@ -89,7 +96,7 @@ public class Log {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
-
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Date getUpdateDate() {
         return updateDate;
     }

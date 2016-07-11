@@ -22,31 +22,5 @@ public class LogServiceTest {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private LogService logService;
-    @Test
-    public void testQueryAll() throws Exception {
-        List<Log> list = logService.queryAll();
-        for(Log log :list){
-            logger.info("LogList={}",log.getProjectName());
-        }
-    }
 
-    @Test
-    public void testQueryOne() throws Exception {
-
-    }
-
-    @Test
-    public void testQueryByCondition() throws Exception {
-
-    }
-
-    @Test
-    public void testSaveLog() throws Exception {
-
-    }
-
-    @Test
-    public void testUpdateLog() throws Exception {
-
-    }
 }

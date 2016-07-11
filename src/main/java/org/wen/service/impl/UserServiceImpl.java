@@ -34,7 +34,6 @@ public class UserServiceImpl implements UserService {
             user.setId(flag);
             result.setResult(1);
             result.setMessage("注册成功！");
-            result.setData(user);
             return result;
         }
         return null;
@@ -48,6 +47,8 @@ public class UserServiceImpl implements UserService {
         if(flag!=null){
             result.setResult(1);
             result.setMessage("登录成功");
+            result.setData(result);
+            result.setData(user);
         }else{
             result.setResult(2);
             result.setMessage("用户名或者密码不正确！");

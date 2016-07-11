@@ -20,4 +20,9 @@ public class SystemController {
         log.info("<提示>:：跳转到用户管理页面");
         return "admin/yhgl";
     }
+    @RequestMapping("/log")
+    public String log(Model model){
+        log.info("<提示>：跳转到日志管理页面");
+        return "admin/log";
+    }
 }

@@ -1,5 +1,8 @@
 package org.wen.controller;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+import com.sun.deploy.net.HttpResponse;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
+import org.wen.entity.User;
 import org.wen.service.UserService;
 import org.wen.util.ExcelUtil;
+import org.wen.util.JsonUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -38,8 +44,17 @@ public class UserController {
      * @return
      */
     @RequestMapping("/index")
-    public String index(Model model){
+    public String index(Model model,HttpServletRequest request,HttpServletResponse response){
         log.info("<提示>:：跳转到首页");
+//        if( request.getSession().getAttribute("name")==null){
+//            return "index";
+//        }else{
+//            String name = (String) request.getSession().getAttribute("name");
+//            String pwd = (String) request.getSession().getAttribute("pwd");
+//            Result result = log(name,pwd,model,request,response);
+//            model.addAttribute("result", JsonUtil.toJson(result));
+//            return "index";
+//        }
         return "index";
     }
     /**
@@ -77,11 +92,17 @@ public class UserController {
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public Result log(String name,String pwd,Model model){
+    public Result log(String name,String pwd,Model model,HttpServletRequest request,HttpServletResponse response){
         log.info("<提示>：进入登录方法");
         Result result = userService.login(name,pwd);
         log.info("<提示>"+result.toString());
         model.addAttribute("result",result);
+        if(result.getResult() == 1){
+            User user = (User) result.getData();
+            request.getSession().setAttribute("name",user.getName());
+            request.getSession().setAttribute("pwd",pwd);
+        }
+        log.info("Session数据测试：名字为{},密码为{}",name,pwd);
         return result;
     }
     @RequestMapping(value = "/datagrid",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})

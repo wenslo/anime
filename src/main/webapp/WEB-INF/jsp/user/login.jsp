@@ -2,6 +2,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
     $(function(){
+        <% String name = (String) request.getSession().getAttribute("name");%>
+        <% if(name!=null){%>
+            $('#jsp_user_login_loginDialog').dialog('close');
+        <%}%>
         $('#jsp_user_login_loginForm').form({
             url:'${pageContext.request.contextPath}/user/login',
             success:function(r){

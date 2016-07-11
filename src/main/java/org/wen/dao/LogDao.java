@@ -1,49 +1,42 @@
 package org.wen.dao;
 
 import org.wen.entity.Log;
+import org.wen.entity.User;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 /**
- * ������־���DAO��
- * 2016��6��6��21:38:40
- * �º���
+ * 日志DAO
  */
 public interface LogDao {
     /**
-     * ��Ҫ��һ���ܹ����ҳ����е���־��¼�ķ���
+     * 查询用户管理页面所需数据
+     * @param map
      * @return
      */
-    List<Log> queryAll();
+    public List<Log> find(Map map);
+
     /**
-     * ��Ҫ�в鿴����һ���ķ������Ա����ڲ鿴����
+     * 查询总数
+     * @param map
      * @return
      */
-    Log queryById(int id);
+    public Long count(Map map);
+
     /**
-     * ��Ҫ��һ����ѯ����
-     * @return
-     */
-    List<Log> queryByCondition(Map map);
-    /**
-     * ��Ҫ�и����ӵķ���
+     * 添加日志
      * @param log
      * @return
      */
-    void saveLog(Log log);
+    public int save(Log log);
+
     /**
-     * ��Hһ���޸ĵķ���
-     * @param id
-     * @param log
+     * 根据传入的ID删除日志
+     * @param list
      * @return
      */
-    int updateLog(int id, Log log);
-    /**
-     * ��Ҫ��һ��ɾ����־�ķ���
-     * @param id
-     * @return
-     */
-    int deleteLog(int id);
+    public int deleteById(ArrayList<Long> list);
 }
