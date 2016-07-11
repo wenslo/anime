@@ -11,7 +11,7 @@
         <setting name="useColumnLabel" value="true"/>
         <!-- 开启驼峰命名转换 -->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
-
+        <setting name="logPrefix" value="dao."/>
 
     </settings>
 </configuration>

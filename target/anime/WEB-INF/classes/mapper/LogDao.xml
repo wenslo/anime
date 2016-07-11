@@ -3,33 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.wen.dao.LogDao">
-    <select id="queryAll" resultType="org.wen.entity.Log">
-        select * from log
-    </select>
-
-    <select id="queryById" parameterType="int" resultType="org.wen.entity.Log">
-        select * from log l where l.id = #{_parameter}
-    </select>
-
-    <select id="queryByCondition" parameterType="map" resultType="org.wen.entity.Log">
-        select * from
-        log l
-        where
-        l.name like '%'+#{username}+'%'
-        and
-        l.common like '%'+#{common}+'%'
-        and
-        l.create_date  <![CDATA[<=]]]> #{createDate}
-    </select>
-    <insert id="saveLog" parameterType="org.wen.entity.Log">
-        insert into log l(name,common,project_name,create_date,update_date,state)
-        values(#{name},#{common},#{projectName},#{createTime},#{updateTime},#{state})
-    </insert>
-    <update id="updateLog" parameterType="org.wen.entity.Log">
-        update log l set l.name=#{name},l.common=#{common},l.project_name=#{projectName},l.create_date=#{createDate},l.update_date=#{updateDate},l.state=#{state}
-            where l.id = #{id}
-    </update>
-    <delete id="deleteLog" parameterType="int">
-        delete from log l where l.id = #{_parameter}
-    </delete>
+        <select id="find" parameterType="map" resultType="org.wen.entity.Log">
+                select id,name,common,project_name as 'projectName',create_date as 'createDate',update_date as 'updateDate',state  from log l <include refid="log_search"/> limit #{page},#{rows}
+        </select>
+        <select id="count" parameterType="map" resultType="long">
+                select count(*) from log l
+        </select>
+        <insert id="save" parameterType="org.wen.entity.Log">
+                insert into log (name,common,project_name,create_date,state)
+                value(#{name},#{common},#{projectName},#{createDate},'4')
+        </insert>
+        <sql id="log_search">
+                <where>
+                        <if test="common != null and common != ''">
+                                and l.common like '%'||#{common}||'%'
+                        </if>
+                </where>
+        </sql>
 </mapper>

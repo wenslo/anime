@@ -20,7 +20,9 @@
   <div data-options="region:'west',split:true" style="width:200px;">
     <jsp:include page="layout/west.jsp"/>
   </div>
-  <div data-options="region:'east'" style="width:200px;"></div>
+  <div data-options="region:'east'" style="width:200px;">
+    <jsp:include page="layout/east.jsp"/>
+  </div>
   <div data-options="region:'center',title:'欢迎使用温海林的日志管理系统'">
     <jsp:include page="layout/center.jsp"/>
   </div>

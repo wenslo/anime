@@ -14,10 +14,7 @@
                 addTab({title:node.text,href:url,closable:true});
               }
             }
-            "></ul>
-    </div>
-    <div title="Title2" data-options="iconCls:'icon-reload',selected:true" style="padding:10px;margin:0 auto;">
-
+            " style="margin-left: 5px"></ul>
     </div>
   </div>
 </div>

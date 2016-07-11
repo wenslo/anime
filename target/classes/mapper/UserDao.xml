@@ -25,7 +25,7 @@
         select id,name,password as 'pwd' from user where id = #{_parameter}
     </select>
     <update id="updateUser" parameterType="org.wen.entity.User">
-        update user u set u.name = #{name},u.password = #{pwd} where u.id = #{id}
+        update user u set u.name = #{name},u.password = #{pwd},u.updateDate = str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s') where u.id = #{id}
     </update>
     <select id="findByIds" resultType="org.wen.entity.User" parameterType="java.util.List">
         select id,name,password as 'pwd',createDate,updateDate from user where id in
