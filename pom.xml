@@ -135,6 +135,12 @@
             <artifactId>poi</artifactId>
             <version>3.9</version>
         </dependency>
+        <!-- Geogle  Guava-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>anime</finalName>
