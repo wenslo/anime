@@ -14,6 +14,15 @@
     sortOrder : 'desc',
     checkOnSelect : false,
     selectOnCheck : false,
+    onClickCell:function(rowIndex, field, value){
+        alert(rowIndex);
+        alert(field);
+        alert(value);
+        if(field == "common"){
+            $("#jsp_admin_log_commom").val(value);
+            $("#jsp_admin_yhgl_updateDialog").dialog("open");
+        }
+    },
     frozenColumns:[[
       {
         field:'id',
@@ -89,6 +98,7 @@
         text:'导出',
         iconCls:'icon-more',
         handler:function(){
+            excelExport();
         }
       }
     ],
@@ -129,6 +139,22 @@
               title:'提示',
               msg:'请选择要删除的日志！'
           });
+      }
+  }
+  function excelExport(){
+      var rows = $('#jsp_admin_log_datagrid').datagrid('getChecked');
+      var ids = "";
+      if(rows.length==0){
+          $.messager.confirm('提示','生成数据可能需要一段时间，请耐心等待！',function(r){
+              if(r){
+                  document.location = "${pageContext.request.contextPath}/log/excelExport?ids=quanbu";
+              }
+          });
+      }else{
+          for(var i=0;i<rows.length;i++){
+              ids += rows[i].id+",";
+          }
+          document.location = "${pageContext.request.contextPath}/log/excelExport?ids="+ids;
       }
   }
   function searchFun(){
@@ -209,4 +235,7 @@
       </tr>
     </table>
   </form>
+</div>
+<div id="jsp_admin_yhgl_updateDialog" data-options="closed:true,modal:true,title:'查看内容'" class="easyui-dialog" style="width: 450px;height: 300px;">
+    <textarea id="jsp_admin_log_commom"class="textarea" data-options="required:true" style="width:300px;"></textarea>
 </div>

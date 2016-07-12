@@ -64,4 +64,53 @@ public class LogServiceImpl implements LogService{
         result.setResult(1);
         return result;
     }
+
+    public List<Map<String, Object>> queryMap(String ids) {
+        if("quanbu".equals(ids)){
+            List<Log> logs = logDao.findAll();
+            List<Map<String, Object>> original = dataWrite(logs);
+            return original;
+        }
+        String userId = ids.substring(0,ids.lastIndexOf(","));
+        String[] id = ids.split(",");
+        ArrayList<Long> list = new ArrayList<Long>();
+        for(String number :id){
+            list.add(Long.parseLong(number));
+        }
+        List<Log> logs = logDao.findByIds(list);
+        List<Map<String, Object>> original = dataWrite(logs);
+        return original;
+    }
+
+    public List<Map<String,Object>> dataWrite(List<Log> logs) {
+        List<Map<String,Object>> original = new ArrayList<Map<String, Object>>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for(Log log :logs){
+            Map<String,Object > map = new HashMap<String, Object>();
+            map.put("name", log.getName());
+            map.put("common", log.getCommon());
+            map.put("projectName",log.getProjectName());
+            map.put("createDate",sdf.format(log.getCreateDate()));
+            map.put("updateDate",log.getUpdateDate()!=null?sdf.format(log.getUpdateDate()):"");
+            switch (Integer.parseInt(log.getState())){
+                case 0:
+                    map.put("state","好");
+                    break;
+                case 1:
+                    map.put("state","完成");
+                    break;
+                case 2:
+                    map.put("state","差");
+                    break;
+                case 3:
+                    map.put("state","未完成");
+                    break;
+                case 4:
+                    map.put("state","未审核");
+                    break;
+            }
+            original.add(map);
+        }
+        return original;
+    }
 }

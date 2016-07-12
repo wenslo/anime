@@ -14,6 +14,15 @@
     sortOrder : 'desc',
     checkOnSelect : false,
     selectOnCheck : false,
+    onClickCell:function(rowIndex, field, value){
+        alert(rowIndex);
+        alert(field);
+        alert(value);
+        if(field == "common"){
+            $("#jsp_admin_log_commom").val(value);
+            $("#jsp_admin_yhgl_updateDialog").dialog("open");
+        }
+    },
     frozenColumns:[[
       {
         field:'id',
@@ -83,11 +92,13 @@
         text:'删除',
         iconCls:'icon-edit',
         handler:function(){
+            remove();
         }
       },'-',{
         text:'导出',
         iconCls:'icon-more',
         handler:function(){
+            excelExport();
         }
       }
     ],
@@ -95,6 +106,56 @@
   function append(){
     $('#jsp_amdin_log_addForm input').val('');
     $("#jsp_admin_log_addDialog").dialog('open');
+  }
+  function remove(){
+      var rows = $('#jsp_admin_log_datagrid').datagrid('getChecked');
+      var ids = [];
+      if(rows.length>0){
+          $.messager.confirm('确认','您是否要删除当前选中的日志？',function(r){
+              if(r){
+                  for(var i=0;i<rows.length;i++){
+                      ids.push([rows[i].id]);
+                  }
+                  $.ajax({
+                      url : '${pageContext.request.contextPath}/log/delete',
+                      type:'POST',
+                      data:{
+                          ids:ids.join(',')
+                      },
+                      dataType:'json',
+                      success:function(r){
+                          $('#jsp_admin_log_datagrid').datagrid('load');
+                          $('#jsp_admin_log_datagrid').datagrid('unselectAll');
+                          $.messager.show({
+                              title:'提示',
+                              msg:r.message
+                          });
+                      }
+                  });
+              }
+          });
+      }else{
+          $.messager.show({
+              title:'提示',
+              msg:'请选择要删除的日志！'
+          });
+      }
+  }
+  function excelExport(){
+      var rows = $('#jsp_admin_log_datagrid').datagrid('getChecked');
+      var ids = "";
+      if(rows.length==0){
+          $.messager.confirm('提示','生成数据可能需要一段时间，请耐心等待！',function(r){
+              if(r){
+                  document.location = "${pageContext.request.contextPath}/log/excelExport?ids=quanbu";
+              }
+          });
+      }else{
+          for(var i=0;i<rows.length;i++){
+              ids += rows[i].id+",";
+          }
+          document.location = "${pageContext.request.contextPath}/log/excelExport?ids="+ids;
+      }
   }
   function searchFun(){
     $("#jsp_admin_log_datagrid").datagrid('load',serializeObject($('#jsp_admin_log_searchForm')));
@@ -174,4 +235,7 @@
       </tr>
     </table>
   </form>
+</div>
+<div id="jsp_admin_yhgl_updateDialog" data-options="closed:true,modal:true,title:'查看内容'" class="easyui-dialog" style="width: 450px;height: 300px;">
+    <textarea id="jsp_admin_log_commom"class="textarea" data-options="required:true" style="width:300px;"></textarea>
 </div>

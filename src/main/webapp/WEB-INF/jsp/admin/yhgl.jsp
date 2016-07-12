@@ -148,7 +148,7 @@
         if(rows.length==0){
             $.messager.confirm('提示','生成数据可能需要一段时间，请耐心等待！',function(r){
                 if(r){
-                    document.location = "${pageContext.request.contextPath}/user/excelExport";
+                    document.location = "${pageContext.request.contextPath}/user/excelExport?ids=quanbu";
                 }
             });
         }else{

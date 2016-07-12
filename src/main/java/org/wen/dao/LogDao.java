@@ -39,4 +39,17 @@ public interface LogDao {
      * @return
      */
     public int deleteById(ArrayList<Long> list);
+
+    /**
+     * 查询所有数据
+     * @return
+     */
+    public List<Log> findAll();
+
+    /**
+     * 根据所选ID，查询所对应的数据
+     * @param list
+     * @return
+     */
+    public List<Log> findByIds(List<Long> list);
 }

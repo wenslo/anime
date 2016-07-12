@@ -13,6 +13,27 @@
                 insert into log (name,common,project_name,create_date,state)
                 value(#{name},#{common},#{projectName},#{createDate},'4')
         </insert>
+        <delete id="deleteById" parameterType="java.util.List">
+                delete from log where id in
+                <foreach item="ids" index="index" collection="list" open="(" separator="," close=")">
+                        #{ids}
+                </foreach>
+        </delete>
+        <select id="findByIds" resultType="org.wen.entity.Log" parameterType="java.util.List">
+                select name,common,
+                (select project_name from project where id = l.project_name ) as 'projectName',
+                create_date as 'createDate',update_date as 'updateDate',state
+                from log l where id in
+                <foreach collection="list" item="ids" index="index" open="(" separator="," close=")">
+                        #{ids}
+                </foreach>
+        </select>
+        <select id="findAll" resultType="org.wen.entity.Log">
+                select name,common,
+                (select project_name from project where id = l.project_name ) as 'projectName',
+                create_date as 'createDate',update_date as 'updateDate',state
+                from log
+        </select>
         <sql id="log_search">
                 <where>
                         <if test="common != null and common != ''">

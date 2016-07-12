@@ -6,6 +6,7 @@ import org.wen.entity.Log;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface LogService {
     /**
@@ -33,4 +34,12 @@ public interface LogService {
      * @return
      */
     public Result deleteLog(String ids);
+
+    /**
+     * 查询导出日志所需要的数据，对其进行数据封装
+     * 2016年7月11日21:28:25
+     * @param ids
+     * @return
+     */
+    public List<Map<String,Object>> queryMap(String ids);
 }
