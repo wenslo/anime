@@ -42,4 +42,10 @@ public interface LogService {
      * @return
      */
     public List<Map<String,Object>> queryMap(String ids);
+
+    /**
+     * 根据传入的ID
+     * @return
+     */
+    public Log getLog(String id);
 }

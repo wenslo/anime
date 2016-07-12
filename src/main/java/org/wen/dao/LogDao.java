@@ -52,4 +52,11 @@ public interface LogDao {
      * @return
      */
     public List<Log> findByIds(List<Long> list);
+
+    /**
+     * 根据所选ID查询出对应的详情
+     * @param id 日志ID
+     * @return
+     */
+    public Log findById(int id);
 }

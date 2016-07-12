@@ -1,5 +1,7 @@
 package org.wen.service.impl;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +73,7 @@ public class UserServiceImpl implements UserService {
     public Result deleteUser(String ids) {
         Result result = new Result();
         String[] id = ids.split(",");
-        ArrayList<Long> list = new ArrayList<Long>();
+        ArrayList<Long> list = Lists.newArrayList();
         for(String number :id){
             list.add(Long.parseLong(number));
         }
@@ -116,7 +118,7 @@ public class UserServiceImpl implements UserService {
         }
         String userId = ids.substring(0,ids.lastIndexOf(","));
         String[] id = ids.split(",");
-        ArrayList<Long> list = new ArrayList<Long>();
+        ArrayList<Long> list = Lists.newArrayList();
         for(String number :id){
             list.add(Long.parseLong(number));
         }
@@ -133,7 +135,7 @@ public class UserServiceImpl implements UserService {
     public List<Map<String, Object>> dataWrite(List<User> users) {
         List<Map<String,Object>> original = new ArrayList<Map<String, Object>>();
         for(User u :users){
-            Map<String,Object > map = new HashMap<String, Object>();
+            Map<String,Object > map = Maps.newHashMap();
             map.put("id",u.getId());
             map.put("name",u.getName());
             map.put("pwd",u.getPwd());

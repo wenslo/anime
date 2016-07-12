@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -63,6 +64,20 @@ public class LogController {
         log.info("<提示>：进入删除用户方法");
         Result result = logService.deleteLog(ids);
         return result;
+    }
+
+    /**
+     * 查看详情的方法
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="{id}/detail",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Log detail(@PathVariable String id, Model model,HttpServletRequest request){
+        String name = (String) request.getSession().getAttribute("name");
+        log.info("<提示>：{}进入查看详情方法",name);
+        Log log = logService.getLog(id);
+        return log;
     }
     /**
      * Excel的导出

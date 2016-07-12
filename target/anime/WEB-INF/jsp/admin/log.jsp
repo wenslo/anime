@@ -14,14 +14,24 @@
     sortOrder : 'desc',
     checkOnSelect : false,
     selectOnCheck : false,
-    onClickCell:function(rowIndex, field, value){
-        alert(rowIndex);
-        alert(field);
-        alert(value);
-        if(field == "common"){
-            $("#jsp_admin_log_commom").val(value);
-            $("#jsp_admin_yhgl_updateDialog").dialog("open");
-        }
+    onClickRow:function(rowIndex, rowData){
+        $('#jsp_admin_log_datagrid').datagrid('unselectAll');
+        $("#jsp_admin_log_name").val("");
+        $("#jsp_admin_log_project_name").val("");
+        $("#jsp_admin_log_commom").val("");
+        console.log(rowData);
+        var id = rowData.id;
+        $.ajax({
+            url : '${pageContext.request.contextPath}/log/'+id+'/detail',
+            type:'POST',
+            dataType:'json',
+            success:function(r){
+                $("#jsp_admin_log_name").val(r.name);
+                $("#jsp_admin_log_project_name").val(r.projectName);
+                $("#jsp_admin_log_commom").val(r.common);
+            }
+        });
+        $("#jsp_admin_yhgl_updateDialog").dialog("open");
     },
     frozenColumns:[[
       {
@@ -236,6 +246,19 @@
     </table>
   </form>
 </div>
-<div id="jsp_admin_yhgl_updateDialog" data-options="closed:true,modal:true,title:'查看内容'" class="easyui-dialog" style="width: 450px;height: 300px;">
-    <textarea id="jsp_admin_log_commom"class="textarea" data-options="required:true" style="width:300px;"></textarea>
+<div id="jsp_admin_yhgl_updateDialog" data-options="closed:true,modal:true,title:'查看内容'" class="easyui-dialog" style="width: 500px;height: 300px;">
+    <table>
+        <tr>
+            <th>姓名</th>
+            <td><input id="jsp_admin_log_name" readonly/></td>
+            <th>所属项目</th>
+            <td><input id="jsp_admin_log_project_name" readonly/></td>
+        </tr>
+        <tr>
+            <th>日志内容</th>
+            <td colspan="3">
+                <textarea id="jsp_admin_log_commom"class="textarea" data-options="required:true" style="width:346px;"></textarea>
+            </td>
+        </tr>
+    </table>
 </div>

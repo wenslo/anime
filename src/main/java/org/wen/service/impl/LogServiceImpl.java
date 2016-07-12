@@ -1,5 +1,7 @@
 package org.wen.service.impl;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ public class LogServiceImpl implements LogService{
     private LogDao logDao;
     public DataGrid datagrid(String common,int page,int rows) {
         DataGrid dg = new DataGrid();
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = Maps.newHashMap();
         params.put("common",common);
         params.put("page",page-1);
         params.put("rows",rows);
@@ -55,7 +57,7 @@ public class LogServiceImpl implements LogService{
     public Result deleteLog(String ids) {
         Result result = new Result();
         String[] id = ids.split(",");
-        ArrayList<Long> list = new ArrayList<Long>();
+        ArrayList<Long> list = Lists.newArrayList();
         for(String number :id){
             list.add(Long.parseLong(number));
         }
@@ -73,7 +75,7 @@ public class LogServiceImpl implements LogService{
         }
         String userId = ids.substring(0,ids.lastIndexOf(","));
         String[] id = ids.split(",");
-        ArrayList<Long> list = new ArrayList<Long>();
+        ArrayList<Long> list = Lists.newArrayList();
         for(String number :id){
             list.add(Long.parseLong(number));
         }
@@ -82,11 +84,15 @@ public class LogServiceImpl implements LogService{
         return original;
     }
 
+    public Log getLog(String id) {
+        return logDao.findById(Integer.parseInt(id));
+    }
+
     public List<Map<String,Object>> dataWrite(List<Log> logs) {
         List<Map<String,Object>> original = new ArrayList<Map<String, Object>>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for(Log log :logs){
-            Map<String,Object > map = new HashMap<String, Object>();
+            Map<String,Object > map = Maps.newHashMap();
             map.put("name", log.getName());
             map.put("common", log.getCommon());
             map.put("projectName",log.getProjectName());

@@ -27,4 +27,11 @@
     </bean>
     <!-- 4：扫描web相关的bean -->
     <context:component-scan base-package="org.wen.controller"/>
+    <!--声明一个拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/"/>
+            <bean class="org.wen.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
