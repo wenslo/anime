@@ -3,31 +3,33 @@ package org.wen.controller;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.sun.deploy.net.HttpResponse;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 import org.wen.entity.User;
 import org.wen.service.UserService;
+import org.wen.service.impl.UserServiceImpl;
 import org.wen.util.ExcelUtil;
 import org.wen.util.JsonUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 /**
  * Created by wen on 2016/6/19.
@@ -203,5 +205,25 @@ public class UserController {
                 os.close();
             }
         }
+    }
+    /**
+     * Excel的导入
+     * @throws IOException
+     */
+    @RequestMapping("/uploadExcel")
+    public String doUploadFile(@RequestParam("uploadExcel") MultipartFile file) throws IOException {
+        log.info("<提示>：进入导入文件的方法");
+        if(!file.isEmpty()){
+            log.info("Process file(getOriginalFilename): {}", file.getOriginalFilename());
+            log.info("Process file(getName): {}", file.getName());
+            log.info("Process file(getContentType): {}", file.getContentType());
+            log.info("Process file(getSize): {}", file.getSize());
+//            FileUtils.copyInputStreamToFile(file.getInputStream(), new File("c:\\temp\\happyBKs\\", System.currentTimeMillis() + file.getOriginalFilename()));
+        }
+        //得到该文件的输入流
+        InputStream input = file.getInputStream();
+        List<User> users = ExcelUtil.uploadExcel(input);
+        userService.addUsers(users);
+        return "admin/yhgl";
     }
 }

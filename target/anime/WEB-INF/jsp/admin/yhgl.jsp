@@ -70,6 +70,12 @@
                 handler:function(){
                     excelExport();
                 }
+            },'-',{
+                text:'导入',
+                iconCls:'icon-filter',
+                handler:function(){
+                    uploadExcel();
+                }
             }
 
         ]
@@ -156,6 +162,26 @@
                 ids += rows[i].id+",";
             }
             document.location = "${pageContext.request.contextPath}/user/excelExport?ids="+ids;
+        }
+    }
+    function uploadExcel(){
+        $("#jsp_admin_yhgl_upload_excel").dialog("open");
+    }
+    function uploadFile(){
+        var fileName= $('#uploadExcel').filebox('getValue');
+        alert(fileName);
+        if(fileName==""){
+            $.messager.alert('提示','请选择上传文件！','info');
+        }else{
+            var d1=/\.[^\.]+$/.exec(fileName);
+            if(d1 == ".xls"){
+                document.getElementById("questionTypesManage").action="${pageContext.request.contextPath}/user/uploadExcel";
+                document.getElementById("questionTypesManage").submit();
+                $.messager.alert('提示','操作成功！','info');
+            }else{
+                $.messager.alert('提示','请选择xls格式文件！','info');
+                $('#uploadExcel').filebox('setValue','');
+            }
         }
     }
 </script>
@@ -254,3 +280,12 @@
         </table>
     </form>
 </div>
+<div id="jsp_admin_yhgl_upload_excel" data-options="closed:true,modal:true" class="easyui-dialog" style="width: 418px;height: 102px;">
+    <form id="questionTypesManage"  method="post" enctype="multipart/form-data">
+       <nobr> 选择文件：　<input id="uploadExcel" name="uploadExcel" class="easyui-filebox" style="width:200px" data-options="prompt:'请选择文件...'">
+
+        　　<a href="#" class="easyui-linkbutton" style="width:122px;float:right" onclick="uploadFile()"  >导入用户</a> 　　     　　　　　
+       </nobr>
+    </form>
+</div>
+

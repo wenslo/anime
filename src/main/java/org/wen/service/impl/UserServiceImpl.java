@@ -127,6 +127,16 @@ public class UserServiceImpl implements UserService {
         return original;
     }
 
+    public void addUsers(List<User> users) {
+        for(User user:users){
+            try {
+                userDao.reg(user);
+            } catch (Exception e) {
+                log.error("批量添加用户错误！错误为{}",e);
+            }
+        }
+    }
+
     /**
      * 用于Excel导出的数据封装
      * @param users
@@ -146,7 +156,7 @@ public class UserServiceImpl implements UserService {
         return original;
     }
 
-    public String getMd5(String base){
+    public static String getMd5(String base){
         String md5 = DigestUtils.md5DigestAsHex(base.getBytes());
         return md5;
     }
