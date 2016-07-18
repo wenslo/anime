@@ -18,6 +18,7 @@ import org.wen.service.LogService;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @Transactional
@@ -29,7 +30,7 @@ public class LogServiceImpl implements LogService{
         DataGrid dg = new DataGrid();
         Map<String, Object> params = Maps.newHashMap();
         params.put("common",common);
-        params.put("page",page-1);
+        params.put("page",rows*(page-1));
         params.put("rows",rows);
         List<Log> l = logDao.find(params);
         dg.setTotal(logDao.count(params));
@@ -51,6 +52,8 @@ public class LogServiceImpl implements LogService{
             result.setData(log);
             return result;
         }
+//        AtomicInteger index = new AtomicInteger(0);
+//        index.getAndIncrement();
         return null;
     }
 

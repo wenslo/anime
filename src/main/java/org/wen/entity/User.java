@@ -13,6 +13,16 @@ public class User {
     private String pwd;
     private Date createDate;
     private Date updateDate;
+    private Integer roleId;
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
     public User(){}
     @Override
     public String toString() {

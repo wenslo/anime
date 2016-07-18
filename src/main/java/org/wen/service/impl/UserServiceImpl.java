@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
         DataGrid dg = new DataGrid();
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("name",name);
-        params.put("page",page-1);
+        params.put("page",rows*(page-1));
         params.put("rows",rows);
         List<User> l = userDao.find(params);
         dg.setTotal(userDao.count(params));

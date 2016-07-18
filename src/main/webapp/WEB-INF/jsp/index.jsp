@@ -15,7 +15,9 @@
 
 </head>
 <body class="easyui-layout">
-  <div data-options="region:'north'" style="height:60px;"></div>
+  <div data-options="region:'north'" style="height:60px; background: #4b72a4">
+    <span style="font-size: 20px;font-family: cursive;float: right;margin-top: 20px;color: #ffffff">欢迎${name}访问使用该系统！</span>
+  </div>
   <div data-options="region:'south'" style="height:20px;"></div>
   <div data-options="region:'west',split:true" style="width:200px;">
     <jsp:include page="layout/west.jsp"/>

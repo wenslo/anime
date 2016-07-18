@@ -25,4 +25,9 @@ public class SystemController {
         log.info("<提示>：跳转到日志管理页面");
         return "admin/log";
     }
+    @RequestMapping("/role")
+    public String role(Model model){
+        log.info("<提示>：跳转到角色管理页面");
+        return "admin/role";
+    }
 }
