@@ -1,5 +1,6 @@
 package org.wen.service;
 
+import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 
 /**
@@ -16,4 +17,19 @@ public interface RoleService {
      * @return
      */
     public DataGrid datagrid(String common, int page, int rows);
+
+    /**
+     * 添加角色
+     * @param roleNumber
+     * @param roleName1
+     * @return
+     */
+    public Result addRole(String roleNumber, String roleName1);
+
+    /**
+     * 删除角色
+     * @param ids
+     * @return
+     */
+    public Result deleteRole(String ids);
 }

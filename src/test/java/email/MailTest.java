@@ -1,6 +1,7 @@
 package email;
 
 import org.junit.Test;
+import org.wen.util.MailUtil;
 
 import javax.mail.MessagingException;
 
@@ -15,7 +16,7 @@ public class MailTest {
         for (int i = 0; i < 10; i++) {
             try {
 //                Thread.sleep(1000);
-                MailUtil.send(EMAIL,CONTEXT);
+                MailUtil.send(EMAIL, CONTEXT);
             } catch (MessagingException e) {
                 e.printStackTrace();
             }

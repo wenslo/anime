@@ -5,7 +5,13 @@ package org.wen.entity;
  */
 public class Role {
     private Integer id;
-    private Integer roleName;
+    private Integer roleNumber;
+    private String roleName;
+    public Role(){}
+    public Role(Integer roleNumber, String roleName) {
+        this.roleNumber = roleNumber;
+        this.roleName = roleName;
+    }
 
     public Integer getId() {
         return id;
@@ -15,11 +21,19 @@ public class Role {
         this.id = id;
     }
 
-    public Integer getRoleName() {
+    public String getRoleName() {
         return roleName;
     }
 
-    public void setRoleName(Integer roleName) {
+    public Integer getRoleNumber() {
+        return roleNumber;
+    }
+
+    public void setRoleNumber(Integer roleNumber) {
+        this.roleNumber = roleNumber;
+    }
+
+    public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
 }

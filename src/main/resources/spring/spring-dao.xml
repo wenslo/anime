@@ -40,11 +40,4 @@
         <!-- 给出扫描Dao接口包 -->
         <property name="basePackage" value="org.wen.dao"/>
     </bean>
-
-    <!-- 加载邮件配置服务 -->
-    <context:property-placeholder location="classpath:config.properties"/>
-    <!-- 右键服务开始 -->
-    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-
-    </bean>
 </beans>
