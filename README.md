@@ -15,3 +15,7 @@ As you can see,the project use the framework has a spring springMVC MyBatis Mave
 - 2016-7-19 00:16:27
 - Adding roles among entities as well as the correspoding table,modify the user entity and table
 - Add system path for role 
+
+---
+- 2016-7-19 18:22:17
+- Add to send emails and read the properties of the util
