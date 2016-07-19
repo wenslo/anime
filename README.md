@@ -19,3 +19,7 @@ As you can see,the project use the framework has a spring springMVC MyBatis Mave
 ---
 - 2016-7-19 18:22:17
 - Add to send emails and read the properties of the util
+
+---
+- 2016-7-20 00:11:53
+- Adding roles to add and delete function,modify email errors
