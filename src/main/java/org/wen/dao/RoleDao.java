@@ -16,7 +16,7 @@ public interface RoleDao {
      * @param map
      * @return
      */
-    public List<Log> find(Map map);
+    public List<Role> find(Map map);
 
     /**
      * 查询总数
