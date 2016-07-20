@@ -1,5 +1,6 @@
 package org.wen.service.impl;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
@@ -8,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wen.dao.RoleDao;
+import org.wen.dao.UserDao;
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 import org.wen.entity.Role;
+import org.wen.entity.User;
 import org.wen.service.RoleService;
 
 import java.util.ArrayList;
@@ -26,6 +29,8 @@ public class RoleServiceImpl implements RoleService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
     public RoleDao roleDao;
+    @Autowired
+    public UserDao userDao;
     public DataGrid datagrid(String common, int page, int rows) {
         DataGrid dg = new DataGrid();
         Map<String, Object> params = Maps.newHashMap();
@@ -64,5 +69,59 @@ public class RoleServiceImpl implements RoleService {
         result.setMessage("删除成功！一共删除了"+count+"条数据");
         result.setResult(1);
         return result;
+    }
+
+    public List<Map<String, Object>> queryMap(String ids) {
+        if("quanbu".equals(ids)){
+            List<Role> users = roleDao.findAll();
+            List<Map<String, Object>> original = dataWrite(users);
+            return original;
+        }
+        String roleId = ids.substring(0,ids.lastIndexOf(","));
+        String[] id = ids.split(",");
+        ArrayList<Long> list = Lists.newArrayList();
+        for(String number :id){
+            list.add(Long.parseLong(number));
+        }
+        List<Role> users = roleDao.findByIds(list);
+        List<Map<String, Object>> original = dataWrite(users);
+        return original;
+    }
+
+    public List<Role> getRole() {
+        return roleDao.findAll();
+    }
+
+    public Result addMis(String userId,String roleId) {
+        Map<String,Integer> map = Maps.newHashMap();
+        map.put("userId", Integer.parseInt(Preconditions.checkNotNull(userId)));
+        map.put("roleId",Integer.parseInt(Preconditions.checkNotNull(roleId)));
+        int flag = roleDao.addMis(map);
+        if(flag > 0){
+            log.info("中间表数据插入成功！用户ID为{},角色ID为{}",userId,roleId);
+        }
+        int tag = userDao.insertRole(map);
+        if(flag > 0 && tag > 0){
+            Result result = new Result();
+            result.setResult(1);
+            result.setMessage("设置角色成功！");
+        }
+        return null;
+    }
+
+    /**
+     * 用于Excel导出的数据封装
+     * @param roles
+     * @return
+     */
+    public List<Map<String, Object>> dataWrite(List<Role> roles) {
+        List<Map<String,Object>> original = Lists.newArrayList();
+        for(Role r :roles){
+            Map<String,Object > map = Maps.newHashMap();
+            map.put("roleNumber",r.getRoleNumber());
+            map.put("name",r.getRoleName());
+            original.add(map);
+        }
+        return original;
     }
 }

@@ -13,7 +13,7 @@ public class MailTest {
     private static final String CONTEXT = "接受哥的邮件轰炸吧！！！！！";
 
     public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             try {
 //                Thread.sleep(1000);
                 MailUtil.send(EMAIL, CONTEXT);

@@ -57,11 +57,6 @@
           append();
         }
       },'-',{
-        text:'修改',
-        iconCls:'icon-edit',
-        handler:function(){
-        }
-      },'-',{
         text:'删除',
         iconCls:'icon-edit',
         handler:function(){
@@ -141,7 +136,7 @@
     </table>
   </div>
 </div>
-<div id="jsp_admin_role_addDiarole" data-options="closed:true,modal:true,
+<div id="jsp_admin_role_addDiarole"  data-options="closed:true,modal:true,
                         title:'添加角色',
                         buttons:[{
                         text:'增加',
@@ -169,7 +164,7 @@
                                 }
                             });
                         }
-                    }]" class="easyui-dialog" style="width: 200px;height: 100px;">
+                    }]" class="easyui-dialog" style="width: 450px;height: 100px;">
   <form id="jsp_amdin_role_addForm">
     <table>
         <tr>

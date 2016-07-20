@@ -21,6 +21,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 import org.wen.entity.User;
+import org.wen.service.RoleService;
 import org.wen.service.UserService;
 import org.wen.service.impl.UserServiceImpl;
 import org.wen.util.ExcelUtil;
@@ -40,6 +41,8 @@ public class UserController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
     /**
      * 跳转到注册页面
      * @param model
@@ -225,5 +228,12 @@ public class UserController {
         List<User> users = ExcelUtil.uploadExcel(input);
         userService.addUsers(users);
         return "admin/yhgl";
+    }
+    @RequestMapping("/role")
+    @ResponseBody
+    public Result role(String userId,String roleId){
+        log.info("提示：进入设置角色的方法");
+        Result result = roleService.addMis(userId,roleId);
+        return result;
     }
 }

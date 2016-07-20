@@ -2,6 +2,10 @@ package org.wen.service;
 
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
+import org.wen.entity.Role;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 角色Service
@@ -32,4 +36,23 @@ public interface RoleService {
      * @return
      */
     public Result deleteRole(String ids);
+
+    /**
+     * 导出Excel需要的数据，并进行封装
+     * @param ids
+     * @return
+     */
+    public List<Map<String,Object>> queryMap(String ids);
+
+    /**
+     * 查询所有的角色信息
+     * @return
+     */
+    public List<Role> getRole();
+
+    /**
+     * 添加中间表数据，添加用户的角色
+     * @return
+     */
+    public Result addMis(String userId,String roleId);
 }

@@ -36,6 +36,11 @@
     <select id="findAll" resultType="org.wen.entity.User">
         select id,name,password as 'pwd',createDate,updateDate from user
     </select>
+    <update id="insertRole" parameterType="map">
+        update user u set u.role_id = #{roleId} where u.id = #{userId}
+    </update>
+    
+    
     <sql id="user_search">
         <where>
             <if test="name != null and name != ''">

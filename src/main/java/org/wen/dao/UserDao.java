@@ -72,4 +72,10 @@ public interface UserDao {
      * @return
      */
     List<User> findAll();
+
+    /**
+     * 插入角色Id
+     * @return
+     */
+    public int insertRole(Map<String,Integer> map);
 }

@@ -24,9 +24,16 @@
         <processorPath useClasspath="true" />
         <module name="anime" />
       </profile>
+      <profile default="false" name="Annotation profile for base" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="anime" target="1.5" />
+      <module name="base" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -76,6 +76,12 @@
                 handler:function(){
                     uploadExcel();
                 }
+            },'-',{
+                text:'角色修改',
+                iconCls:'icon-large-clipart',
+                handler:function(){
+                    modifyRole();
+                }
             }
 
         ]
@@ -169,7 +175,6 @@
     }
     function uploadFile(){
         var fileName= $('#uploadExcel').filebox('getValue');
-        alert(fileName);
         if(fileName==""){
             $.messager.alert('提示','请选择上传文件！','info');
         }else{
@@ -183,6 +188,20 @@
                 $('#uploadExcel').filebox('setValue','');
             }
         }
+    }
+    function modifyRole(){
+        var rows = $('#jsp_admin_yhgl_datagrid').datagrid('getChecked');
+        var ids = "";
+        if(rows.length==0){
+            $.messager.alert('提示','必须选择一条用户信息！');
+        }else if(rows.length>1){
+            $.messager.alert('提示','只能选择一条用户信息！');
+        }else{
+            $("#jsp_amdin_yhgl_userId").val(rows[0].id);
+            $("#jsp_amdin_yhgl_userName").textbox('setValue',rows[0].name);
+            $("#jsp_admin_yhgl_roleDialog").dialog('open');
+        }
+
     }
 </script>
 <div id="jsp_admin_yhgl_layout" class="easyui-layout" data-options="fit:true,border:false">
@@ -288,4 +307,58 @@
        </nobr>
     </form>
 </div>
-
+<div id="jsp_admin_yhgl_roleDialog" style="width: 300px;height: 300px;" class="easyui-dialog"
+     data-options="closed:true,modal:true,
+    title:'设置权限',
+    buttons:[{
+        text:'设置',
+        icon:'icon-large-shapes',
+        handler:function(){
+            $('#jsp_amdin_yhgl_roleForm').form('submit',{
+                url:'${pageContext.request.contextPath}/user/role',
+                success:function(r){
+                    var obj = jQuery.parseJSON(r);
+                    if(obj.result == 1){
+                        $('#jsp_admin_yhgl_datagrid').datagrid('load',{});
+                        $('#jsp_admin_yhgl_updateDialog').dialog('close');
+                    }
+                    if(obj.result == 2){
+                        $('#jsp_admin_yhgl_updateDialog').dialog('close');
+                    }
+                    $.messager.show({
+                        title:'提示',
+                        msg:obj.message
+                    });
+                }
+            });
+        }
+    }]">
+    <form id="jsp_amdin_yhgl_roleForm" method="post">
+        <table>
+            <tr>
+                <td>
+                    用户名：
+                </td>
+                <td>
+                    <input id="jsp_amdin_yhgl_userId" name="userId"  type="hidden"/>
+                    <input id="jsp_amdin_yhgl_userName" name="userName" class="easyui-textbox"  style="width:100%" disabled/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    角色名：
+                </td>
+                <td>
+                    <select class="easyui-combobox" name="roleId" style="width:150px"
+                            data-options="
+                                url:'${pageContext.request.contextPath}/role/getRole',
+                                method:'get',
+                                valueField:'id',
+                                textField:'roleName',
+                                panelHeight:'auto'" >
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

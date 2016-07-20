@@ -8,6 +8,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 2016年7月19日16:04:53
@@ -56,7 +58,8 @@ public class MailUtil {
         msg.setSubject("帐号激活邮件");
         msg.setSentDate(new Date());
         msg.setContent(content,"text/html;charset=utf-8");
-        Thread t = new Thread(new Runnable() {
+        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        fixedThreadPool.execute(new Runnable() {
             public void run() {
                 try {
                     log.info("邮件开始发送！");
@@ -67,6 +70,11 @@ public class MailUtil {
                 }
             }
         });
-        t.start();
+//        Thread t = new Thread(new Runnable() {
+//            public void run() {
+//
+//            }
+//        });
+//        t.start();
     }
 }

@@ -5,6 +5,7 @@
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
+    <file type="web" url="file://E:/MyEclipse8.6_WorkSpace/yikabang" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
