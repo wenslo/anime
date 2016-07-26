@@ -20,7 +20,7 @@
         </foreach>
     </delete>
     <select id="findAll" resultType="org.wen.entity.Role">
-        select role_number as 'roleNumber', role_name as 'roleName'
+        select id, role_number as 'roleNumber', role_name as 'roleName'
         from role order by role_number desc
     </select>
     <select id="findByIds" resultType="org.wen.entity.Role" parameterType="java.lang.Integer">
@@ -30,7 +30,13 @@
         </foreach>
         order by r.id desc
     </select>
-    <insert id="addMis" parameterType="map">
-        insert into user_mis_role u (role_id,user_id) value (#{roleId},#{userId})
+    <insert id="addMis" parameterType="java.util.Map">
+        insert into user_mis_role (role_id,user_id) values ( #{roleId}, #{userId} )
     </insert>
+    <delete id="deleteByUserId" parameterType="java.util.List">
+        delete from user_mis_role r where r.user_id in
+        <foreach item="ids" index="index" collection="list" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
 </mapper>

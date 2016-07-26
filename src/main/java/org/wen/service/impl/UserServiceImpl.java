@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+import org.wen.dao.LogDao;
+import org.wen.dao.RoleDao;
 import org.wen.dao.UserDao;
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 import org.wen.entity.User;
+import org.wen.section.SystemControllerLog;
+import org.wen.section.SystemServiceLog;
 import org.wen.service.UserService;
 
 import javax.annotation.Resource;
@@ -27,6 +31,11 @@ public class UserServiceImpl implements UserService {
     private Logger log = LoggerFactory.getLogger(this.getClass());
     @Resource
     private UserDao userDao;
+    @Resource
+    private LogDao logDao;
+    @Resource
+    private RoleDao roleDao;
+    @SystemServiceLog(description = "用户注册")
     public Result regUser(String name, String pwd) throws Exception{
         Result result = new Result();
         User user = new User(name,getMd5(pwd));
@@ -40,7 +49,7 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
-
+    @SystemServiceLog(description = "用户登录")
     public Result login(String name, String pwd) {
         Result result = new Result();
         User user = new User(name,getMd5(pwd));
@@ -50,14 +59,14 @@ public class UserServiceImpl implements UserService {
             result.setResult(1);
             result.setMessage("登录成功");
             result.setData(result);
-            result.setData(user);
+            result.setData(flag);
         }else{
             result.setResult(2);
             result.setMessage("用户名或者密码不正确！");
         }
         return result;
     }
-
+    @SystemServiceLog(description = "用户列表")
     public DataGrid datagrid(String name,int page,int rows) {
         DataGrid dg = new DataGrid();
         Map<String, Object> params = new HashMap<String, Object>();
@@ -69,7 +78,7 @@ public class UserServiceImpl implements UserService {
         dg.setRows(l);
         return dg;
     }
-
+    @SystemServiceLog(description = "用户删除")
     public Result deleteUser(String ids) {
         Result result = new Result();
         String[] id = ids.split(",");
@@ -78,11 +87,16 @@ public class UserServiceImpl implements UserService {
             list.add(Long.parseLong(number));
         }
         int count = userDao.deleteById(list);
-        result.setMessage("删除成功！一共删除了"+count+"条数据");
+        result.setMessage("删除成功！用户成功被删除！一共删除了"+count+"个用户");
+        //删除该用户下的文章
+        int sign = logDao.deleteByUserId(list);
+        log.info("删除日志成功，删除该用户下对应的日志完毕，一共删除"+sign+"篇日志");
+        int maker = roleDao.deleteByUserId(list);
+        log.info("删除中间表中的数据成功！一共删除了"+maker+"条信息");
         result.setResult(1);
         return result;
     }
-
+    @SystemServiceLog(description = "用户查询")
     public Result findUser(Long id) {
         Result result = new Result();
         User user = userDao.findById(id);
@@ -91,7 +105,7 @@ public class UserServiceImpl implements UserService {
         result.setData(user);
         return result;
     }
-
+    @SystemServiceLog(description = "用户修改")
     public Result updateUser(Long id, String name, String pwd) {
         Result result = new Result();
         try {
@@ -109,7 +123,7 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
-
+    @SystemServiceLog(description = "查询Excel需要的数据")
     public List<Map<String, Object>> queryMap(String ids) {
         if("quanbu".equals(ids)){
             List<User> users = userDao.findAll();
@@ -126,7 +140,7 @@ public class UserServiceImpl implements UserService {
         List<Map<String, Object>> original = dataWrite(users);
         return original;
     }
-
+    @SystemServiceLog(description = "批量添加用户")
     public void addUsers(List<User> users) {
         for(User user:users){
             try {
@@ -142,6 +156,7 @@ public class UserServiceImpl implements UserService {
      * @param users
      * @return
      */
+    @SystemServiceLog(description = "数据封装")
     public List<Map<String, Object>> dataWrite(List<User> users) {
         List<Map<String,Object>> original = new ArrayList<Map<String, Object>>();
         for(User u :users){

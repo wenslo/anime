@@ -61,4 +61,10 @@ public interface RoleDao {
      * @return
      */
     public int addMis(Map<String, Integer> map);
+
+    /**
+     * 根据传入的用户ID，删除中间表中有关该用户的信息
+     * @return
+     */
+    public int deleteByUserId(ArrayList<Long> list);
 }

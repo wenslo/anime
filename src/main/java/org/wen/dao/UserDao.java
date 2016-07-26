@@ -1,5 +1,6 @@
 package org.wen.dao;
 
+import org.wen.dto.Table;
 import org.wen.entity.User;
 
 import java.io.Serializable;
@@ -78,4 +79,6 @@ public interface UserDao {
      * @return
      */
     public int insertRole(Map<String,Integer> map);
+
+    public List<Table> findTable();
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.wen.entity.Menu;
+import org.wen.section.SystemControllerLog;
 import org.wen.service.MenuService;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class MenuController {
      */
     @RequestMapping("/treeNode")
     @ResponseBody
+    @SystemControllerLog(description = "树列表节点")
     public List getTreeNode(String id) {
         List<Menu> list = menuService.getTreeNode(id);
         log.debug("数据为{}",list.toString());
@@ -34,6 +36,7 @@ public class MenuController {
     }
     @RequestMapping("/allTree")
     @ResponseBody
+    @SystemControllerLog(description = "所有树列表")
     public List getAllTreeNode() {
         List<Menu> list = menuService.getAllTreeNode();
         return list;

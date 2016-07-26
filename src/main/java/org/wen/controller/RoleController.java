@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 import org.wen.entity.Role;
+import org.wen.entity.User;
+import org.wen.section.SystemControllerLog;
 import org.wen.service.LogService;
 import org.wen.service.RoleService;
 import org.wen.util.ExcelUtil;
@@ -38,15 +40,14 @@ public class RoleController {
     RoleService roleService;
     @RequestMapping(value = "/datagrid",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
+    @SystemControllerLog(description = "角色列表")
     public DataGrid datagrid(String common,int page,int rows,Model model){
-        log.info("<提示>：进入日志管理页面");
         return roleService.datagrid(common,page,rows);
     }
     @RequestMapping("/add")
     @ResponseBody
+    @SystemControllerLog(description = "角色添加")
     public Result addRole(HttpServletRequest request,HttpServletResponse response,String roleName,String roleNumber) throws Exception {
-        String name = (String) request.getSession().getAttribute("name");
-        log.info(name+"进入角色模块，添加方法");
         Result result = roleService.addRole( roleNumber, roleName);
         return result;
     }
@@ -59,8 +60,8 @@ public class RoleController {
      */
     @RequestMapping(value = "/delete",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
+    @SystemControllerLog(description = "角色删除")
     public Result delete(String ids){
-        log.info("<提示>：进入删除角色方法");
         Result result = roleService.deleteRole(ids);
         return result;
     }
@@ -73,8 +74,8 @@ public class RoleController {
      */
     @RequestMapping("getRole")
     @ResponseBody
+    @SystemControllerLog(description = "查询角色")
     public List<Role> getRole(){
-        log.info("查询对应的项目名和ID");
         List<Role> list = roleService.getRole();
         log.debug("数据测试：{}",list.toString());
         return list;
@@ -87,6 +88,7 @@ public class RoleController {
      * @throws IOException
      */
     @RequestMapping("/excelExport")
+    @SystemControllerLog(description = "角色导出")
     public void excelExport(HttpServletResponse res,String ids) throws IOException {
         OutputStream os = res.getOutputStream();
         BufferedOutputStream bos = null;

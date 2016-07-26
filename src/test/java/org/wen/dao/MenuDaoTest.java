@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.wen.dto.Table;
 import org.wen.entity.Tmenu;
 
 import javax.annotation.Resource;
@@ -19,16 +20,12 @@ import static org.junit.Assert.*;
 @ContextConfiguration({"classpath:spring/spring-dao.xml"})
 public class MenuDaoTest {
     @Resource
-    private MenuDao menuDao;
+    private UserDao userDao;
     @Test
-    public void testFindAll() throws Exception {
-        List<Tmenu> list =  menuDao.findAll();
-        System.out.println(list.toString());
-    }
-
-    @Test
-    public void testFindByPid() throws Exception {
-        List<Tmenu> list =  menuDao.findByPid("0");
-        System.out.println(list.toString());
+    public void testFindTable() throws Exception {
+        List<Table> tables = (List<Table>) userDao.findTable();
+        for (Table table :tables){
+            System.out.println(table.toString()+"/t");
+        }
     }
 }

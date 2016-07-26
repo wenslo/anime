@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.wen.dao.MenuDao;
 import org.wen.entity.Menu;
 import org.wen.entity.Tmenu;
+import org.wen.section.SystemServiceLog;
 import org.wen.service.MenuService;
 
 import javax.annotation.Resource;
@@ -22,6 +23,7 @@ public class MenuServiceImpl implements MenuService{
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Resource
     private MenuDao menuDao;
+    @SystemServiceLog(description = "查询所有树节点")
     public List<Menu> getTreeNode(String id) {
         List<Menu> n1 = new ArrayList<Menu>();
         String hql = null;

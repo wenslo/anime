@@ -10,8 +10,8 @@
                 select count(*) from log l
         </select>
         <insert id="save" parameterType="org.wen.entity.Log">
-                insert into log (name,common,project_name,create_date,state)
-                value(#{name},#{common},#{projectName},#{createDate},'4')
+                insert into log (name,common,project_name,create_date,state,user_id)
+                value(#{name},#{common},#{projectName},#{createDate},'4',#{userId})
         </insert>
         <delete id="deleteById" parameterType="java.util.List">
                 delete from log where id in
@@ -43,6 +43,15 @@
                         <if test="common != null and common != ''">
                                 and l.common like '%'||#{common}||'%'
                         </if>
+                        <if test="userId != null and userId != ''">
+                                and l.user_id = #{userId}
+                        </if>
                 </where>
         </sql>
+        <delete id="deleteByUserId" parameterType="java.util.List">
+                delete from log where user_id in
+                <foreach item="ids" index="index" collection="list" open="(" separator="," close=")">
+                        #{ids}
+                </foreach>
+        </delete>
 </mapper>

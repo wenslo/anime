@@ -7,10 +7,10 @@
         insert into user (name,password,createDate) values(#{name},#{pwd}, str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s'))
     </insert>
     <select id="login" parameterType="org.wen.entity.User" resultType="org.wen.entity.User">
-        select id,name from user u where u.name = #{name} and u.password = #{pwd}
+        select id,name,password as 'pwd' from user u where u.name = #{name} and u.password = #{pwd}
     </select>
     <select id="find" parameterType="map" resultType="org.wen.entity.User">
-        select id,name,password as 'pwd',createDate  from user u <include refid="user_search"/> limit #{page},#{rows}
+        select id,name,password as 'pwd',createDate,updateDate,(select role_name from role r where r.id = u.role_id) as 'roleId'  from user u <include refid="user_search"/> limit #{page},#{rows}
     </select>
     <select id="count" parameterType="map" resultType="long">
         select count(*) from user u
@@ -49,4 +49,12 @@
             <!-- '%'||#{name}||'%' -->
         </where>
     </sql>
+
+    <select id="findTable" resultType="org.wen.dto.Table">
+        select a.TABLE_NAME as 'tableName',b.COMMENTS as 'common'
+        from user_tables a,user_tab_comments b
+        WHERE a.TABLE_NAME=b.TABLE_NAME
+        order by TABLE_NAME
+    </select>
+
 </mapper>

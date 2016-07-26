@@ -36,6 +36,18 @@ public class Log {
      * 状态
      */
     private String state;
+    /**
+     * 用户ID
+     */
+    private Integer userId;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public Log(String name, String common, String projectName, Date createDate) {
         this.name = name;

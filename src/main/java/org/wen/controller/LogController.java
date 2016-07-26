@@ -14,6 +14,7 @@ import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 import org.wen.entity.Log;
 import org.wen.entity.Project;
+import org.wen.entity.User;
 import org.wen.service.LogService;
 import org.wen.util.ExcelUtil;
 
@@ -39,16 +40,17 @@ public class LogController {
     private LogService logService;
     @RequestMapping(value = "/datagrid",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public DataGrid datagrid(String common,int page,int rows,Model model){
-        log.info("<提示>：进入日志管理页面");
-        return logService.datagrid(common,page,rows);
+    public DataGrid datagrid(String common,int page,int rows,Model model,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        return logService.datagrid(common,page,rows,user);
     }
     @RequestMapping("/add")
     @ResponseBody
     public Result addLog(HttpServletRequest request,HttpServletResponse response,String projectName,String common,String createDate) throws Exception {
-        String name = (String) request.getSession().getAttribute("name");
+        User user = (User) request.getSession().getAttribute("user");
+        String name = user.getName();
         log.info(name+"进入日志模块，添加方法");
-        Result result = logService.addLog(name,projectName,common,createDate);
+        Result result = logService.addLog(name,projectName,common,createDate,user);
         return result;
     }
     /**
@@ -74,7 +76,8 @@ public class LogController {
     @RequestMapping(value="{id}/detail",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public Log detail(@PathVariable String id, Model model,HttpServletRequest request){
-        String name = (String) request.getSession().getAttribute("name");
+        User user = (User) request.getSession().getAttribute("user");
+        String name = user.getName();
         log.info("<提示>：{}进入查看详情方法",name);
         Log log = logService.getLog(id);
         return log;

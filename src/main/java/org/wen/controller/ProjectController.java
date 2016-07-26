@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.wen.entity.Project;
+import org.wen.section.SystemControllerLog;
 import org.wen.service.ProjectService;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class ProjectController {
     private ProjectService projectService;
     @RequestMapping("/getProject")
     @ResponseBody
+    @SystemControllerLog(description = "项目查询")
     public List<Project> getProject(Model model){
         log.info("查询对应的项目名和ID");
         List<Project> list = projectService.getProject();

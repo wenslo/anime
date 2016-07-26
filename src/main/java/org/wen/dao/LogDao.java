@@ -59,4 +59,11 @@ public interface LogDao {
      * @return
      */
     public Log findById(int id);
+
+    /**
+     * 根据用户ID删除对应数据库中的文章
+     * @param list
+     * @return
+     */
+    public Integer deleteByUserId(List<Long> list);
 }

@@ -43,6 +43,11 @@
                 width:100,
                 align:'right',
                 sortable:true
+            },{
+                field:'roleId',
+                title:'所属角色',
+                width:100,
+                align:'right'
             }
         ]],
         toolbar:[

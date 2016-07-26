@@ -21,6 +21,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 import org.wen.entity.User;
+import org.wen.section.SystemControllerLog;
 import org.wen.service.RoleService;
 import org.wen.service.UserService;
 import org.wen.service.impl.UserServiceImpl;
@@ -49,17 +50,8 @@ public class UserController {
      * @return
      */
     @RequestMapping("/index")
+    @SystemControllerLog(description = "跳转到首页")
     public String index(Model model,HttpServletRequest request,HttpServletResponse response){
-        log.info("<提示>:：跳转到首页");
-//        if( request.getSession().getAttribute("name")==null){
-//            return "index";
-//        }else{
-//            String name = (String) request.getSession().getAttribute("name");
-//            String pwd = (String) request.getSession().getAttribute("pwd");
-//            Result result = log(name,pwd,model,request,response);
-//            model.addAttribute("result", JsonUtil.toJson(result));
-//            return "index";
-//        }
         return "index";
     }
     /**
@@ -70,8 +62,8 @@ public class UserController {
      */
     @RequestMapping(value = "/reg",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
+    @SystemControllerLog(description = "用户注册")
     public Result reg(String name,String pwd,Model model){
-        log.info("<提示>：进入注册方法");
         Result result = null;
         try {
             result = userService.regUser(name,pwd);
@@ -97,29 +89,28 @@ public class UserController {
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
+    @SystemControllerLog(description = "用户登录")
     public Result log(String name,String pwd,Model model,HttpServletRequest request,HttpServletResponse response){
-        log.info("<提示>：进入登录方法");
         Result result = userService.login(name,pwd);
         log.info("<提示>"+result.toString());
         model.addAttribute("result",result);
         if(result.getResult() == 1){
             User user = (User) result.getData();
-            request.getSession().setAttribute("name",user.getName());
-            request.getSession().setAttribute("pwd",pwd);
+            request.getSession().setAttribute("user",user);
         }
         log.info("Session数据测试：名字为{},密码为{}",name,pwd);
         return result;
     }
     @RequestMapping(value = "/datagrid",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
+    @SystemControllerLog(description = "用户列表")
     public DataGrid datagrid(String name,int page,int rows,Model model){
-        log.info("<提示>：进入用户管理页面的方法");
         return userService.datagrid(name,page,rows);
     }
     @RequestMapping(value = "/add",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
+    @SystemControllerLog(description = "用户新增")
     public Result add(String name,String pwd,Model model){
-        log.info("<提示>：进入新增用户方法");
         Result result = new Result();
         try {
             result = userService.regUser(name,pwd);
@@ -145,8 +136,8 @@ public class UserController {
      */
     @RequestMapping(value = "/delete",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
+    @SystemControllerLog(description = "用户删除")
     public Result delete(String ids){
-        log.info("<提示>：进入删除用户方法");
         Result result = userService.deleteUser(ids);
         return result;
     }
@@ -159,8 +150,8 @@ public class UserController {
      */
     @RequestMapping(value = "{id}/showUpdateUser",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
+    @SystemControllerLog(description = "显示修改用户")
     public Result showUpdateUser(@PathVariable Long id,Model model){
-        log.info("<提示>：进入展示需要修改用户方法");
         Result result = userService.findUser(id);
         return result;
     }
@@ -172,8 +163,8 @@ public class UserController {
      */
     @RequestMapping(value = "/update",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
+    @SystemControllerLog(description = "修改用户")
     public Result update(Long id,String name,String pwd,Model model){
-        log.info("<提示>：进入展示需要修改用户方法");
         Result result = userService.updateUser(id,name,pwd);
         return result;
     }
@@ -184,6 +175,7 @@ public class UserController {
      * @throws IOException
      */
     @RequestMapping("/excelExport")
+    @SystemControllerLog(description = "导出用户")
     public void excelExport(HttpServletResponse res,String ids) throws IOException {
         OutputStream os = res.getOutputStream();
         BufferedOutputStream bos = null;
@@ -214,8 +206,8 @@ public class UserController {
      * @throws IOException
      */
     @RequestMapping("/uploadExcel")
+    @SystemControllerLog(description = "导入用户")
     public String doUploadFile(@RequestParam("uploadExcel") MultipartFile file) throws IOException {
-        log.info("<提示>：进入导入文件的方法");
         if(!file.isEmpty()){
             log.info("Process file(getOriginalFilename): {}", file.getOriginalFilename());
             log.info("Process file(getName): {}", file.getName());
@@ -231,8 +223,8 @@ public class UserController {
     }
     @RequestMapping("/role")
     @ResponseBody
+    @SystemControllerLog(description = "用户角色设置")
     public Result role(String userId,String roleId){
-        log.info("提示：进入设置角色的方法");
         Result result = roleService.addMis(userId,roleId);
         return result;
     }

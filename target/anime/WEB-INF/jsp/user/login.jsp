@@ -1,8 +1,9 @@
+<%@ page import="org.wen.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
     $(function(){
-        <% String name = (String) request.getSession().getAttribute("name");%>
+        <% User name = (User) request.getSession().getAttribute("user");%>
         <% if(name!=null){%>
             $('#jsp_user_login_loginDialog').dialog('close');
         <%}%>

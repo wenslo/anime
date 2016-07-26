@@ -4,7 +4,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Basic Panel - jQuery EasyUI Demo</title>
+  <title>简单的用户管理系统</title>
   <link rel="stylesheet" type="text/css" href="/anime/resource/easyui/themes/default/easyui.css">
   <link rel="stylesheet" type="text/css" href="/anime/resource/easyui/themes/icon.css">
   <link rel="stylesheet" type="text/css" href="/anime/resource/easyui/demo.css">
@@ -16,7 +16,7 @@
 </head>
 <body class="easyui-layout">
   <div data-options="region:'north'" style="height:60px; background: #4b72a4">
-    <span style="font-size: 20px;font-family: cursive;float: right;margin-top: 20px;color: #ffffff">欢迎${name}访问使用该系统！</span>
+    <span style="font-size: 20px;font-family: cursive;float: right;margin-top: 20px;color: #ffffff">欢迎${user.name}访问使用该系统！</span>
   </div>
   <div data-options="region:'south'" style="height:20px;"></div>
   <div data-options="region:'west',split:true" style="width:200px;">

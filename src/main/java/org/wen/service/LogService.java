@@ -3,8 +3,8 @@ package org.wen.service;
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 import org.wen.entity.Log;
+import org.wen.entity.User;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +16,7 @@ public interface LogService {
      * @param rows
      * @return
      */
-    public DataGrid datagrid(String common,int page,int rows);
+    public DataGrid datagrid(String common,int page,int rows,User user);
 
     /**
      * 添加日志
@@ -26,7 +26,7 @@ public interface LogService {
      * @param createDate
      * @return
      */
-    public Result addLog(String naname, String projectName, String common, String createDate) throws Exception;
+    public Result addLog(String naname, String projectName, String common, String createDate,User user) throws Exception;
 
     /**
      * 删除日志

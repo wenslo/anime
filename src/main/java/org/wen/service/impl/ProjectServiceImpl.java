@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wen.dao.ProjectDao;
 import org.wen.entity.Project;
+import org.wen.section.SystemServiceLog;
 import org.wen.service.ProjectService;
 
 import javax.annotation.Resource;
@@ -19,6 +20,7 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
     @Resource
     private ProjectDao projectDao;
+    @SystemServiceLog(description = "查询所有项目")
     public List<Project> getProject() {
         return projectDao.findAll();
     }

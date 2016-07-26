@@ -14,6 +14,7 @@ import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 import org.wen.entity.Role;
 import org.wen.entity.User;
+import org.wen.section.SystemServiceLog;
 import org.wen.service.RoleService;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleDao roleDao;
     @Autowired
     public UserDao userDao;
+    @SystemServiceLog(description = "角色列表")
     public DataGrid datagrid(String common, int page, int rows) {
         DataGrid dg = new DataGrid();
         Map<String, Object> params = Maps.newHashMap();
@@ -42,7 +44,7 @@ public class RoleServiceImpl implements RoleService {
         dg.setRows(l);
         return dg;
     }
-
+    @SystemServiceLog(description = "角色添加")
     public Result addRole(String roleNumber, String roleName) {
         Result result = new Result();
         Role role = new Role(Integer.parseInt(roleNumber),roleName);
@@ -57,7 +59,7 @@ public class RoleServiceImpl implements RoleService {
         }
         return null;
     }
-
+    @SystemServiceLog(description = "角色删除")
     public Result deleteRole(String ids) {
         Result result = new Result();
         String[] id = ids.split(",");
@@ -70,7 +72,7 @@ public class RoleServiceImpl implements RoleService {
         result.setResult(1);
         return result;
     }
-
+    @SystemServiceLog(description = "Excel所需数据查询")
     public List<Map<String, Object>> queryMap(String ids) {
         if("quanbu".equals(ids)){
             List<Role> users = roleDao.findAll();
@@ -87,11 +89,11 @@ public class RoleServiceImpl implements RoleService {
         List<Map<String, Object>> original = dataWrite(users);
         return original;
     }
-
+    @SystemServiceLog(description = "查询所有角色")
     public List<Role> getRole() {
         return roleDao.findAll();
     }
-
+    @SystemServiceLog(description = "设置角色，中间表插入数据")
     public Result addMis(String userId,String roleId) {
         Map<String,Integer> map = Maps.newHashMap();
         map.put("userId", Integer.parseInt(Preconditions.checkNotNull(userId)));
@@ -105,6 +107,7 @@ public class RoleServiceImpl implements RoleService {
             Result result = new Result();
             result.setResult(1);
             result.setMessage("设置角色成功！");
+            return result;
         }
         return null;
     }
@@ -114,6 +117,7 @@ public class RoleServiceImpl implements RoleService {
      * @param roles
      * @return
      */
+    @SystemServiceLog(description = "数据封装")
     public List<Map<String, Object>> dataWrite(List<Role> roles) {
         List<Map<String,Object>> original = Lists.newArrayList();
         for(Role r :roles){

@@ -13,13 +13,13 @@ public class User {
     private String pwd;
     private Date createDate;
     private Date updateDate;
-    private Integer roleId;
+    private String roleId;
 
-    public Integer getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
 
