@@ -23,3 +23,7 @@ As you can see,the project use the framework has a spring springMVC MyBatis Mave
 ---
 - 2016-7-20 00:11:53
 - Adding roles to add and delete function,modify email errors
+
+---
+- 2016-7-26 17:49:00
+- Add spring AOP dependence,add logging for Controller and Service,can only be printed.
