@@ -27,3 +27,7 @@ As you can see,the project use the framework has a spring springMVC MyBatis Mave
 ---
 - 2016-7-26 17:49:00
 - Add spring AOP dependence,add logging for Controller and Service,can only be printed.
+
+---
+- 2016-7-27 17:44:21
+- Remove redundant code in the project, add comments for method and class.add roles change and show subordinate logs function
