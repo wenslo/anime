@@ -12,7 +12,6 @@ import org.wen.service.impl.UserServiceImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -27,7 +26,7 @@ public class ExcelUtil {
      * 2016年7月5日23:51:57
      * 温海林
      */
-    public static HSSFWorkbook export(String sheetName,String [] headMsg,String [] keys,List<Map<String,Object>> contracts,String fileName){
+    public static HSSFWorkbook export(String sheetName,String [] headMsg,String [] keys,List<Map<String,Object>> contracts){
         //创建一个Excel
         HSSFWorkbook workbook = new HSSFWorkbook();
         //创建一个sheet并且指定sheet名字

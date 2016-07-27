@@ -1,8 +1,5 @@
 package org.wen.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wen.dao.MenuDao;
@@ -15,20 +12,19 @@ import javax.annotation.Resource;
 import java.util.*;
 
 /**
- * Created by wen on 2016/6/24.
+ * 树列表service层的实现
+ * 2016年7月27日16:53:35
+ * @author 温海林
  */
 @Service
 @Transactional
 public class MenuServiceImpl implements MenuService{
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Resource
     private MenuDao menuDao;
     @SystemServiceLog(description = "查询所有树节点")
     public List<Menu> getTreeNode(String id) {
         List<Menu> n1 = new ArrayList<Menu>();
-        String hql = null;
-        Map<String,Object> params = new HashMap<String,Object>();
-        List<Tmenu> l = null;
+        List<Tmenu> l;
         if(id == null || id.equals("")){
             l = menuDao.findFirst();
         }else{

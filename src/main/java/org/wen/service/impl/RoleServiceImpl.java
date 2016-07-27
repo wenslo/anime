@@ -13,7 +13,6 @@ import org.wen.dao.UserDao;
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 import org.wen.entity.Role;
-import org.wen.entity.User;
 import org.wen.section.SystemServiceLog;
 import org.wen.service.RoleService;
 
@@ -22,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by wen on 2016/7/19.
+ * 角色的实现
  */
 @Service
 @Transactional
@@ -76,18 +75,16 @@ public class RoleServiceImpl implements RoleService {
     public List<Map<String, Object>> queryMap(String ids) {
         if("quanbu".equals(ids)){
             List<Role> users = roleDao.findAll();
-            List<Map<String, Object>> original = dataWrite(users);
-            return original;
+            return dataWrite(users);
         }
         String roleId = ids.substring(0,ids.lastIndexOf(","));
-        String[] id = ids.split(",");
+        String[] id = roleId.split(",");
         ArrayList<Long> list = Lists.newArrayList();
         for(String number :id){
             list.add(Long.parseLong(number));
         }
         List<Role> users = roleDao.findByIds(list);
-        List<Map<String, Object>> original = dataWrite(users);
-        return original;
+        return dataWrite(users);
     }
     @SystemServiceLog(description = "查询所有角色")
     public List<Role> getRole() {
@@ -114,8 +111,8 @@ public class RoleServiceImpl implements RoleService {
 
     /**
      * 用于Excel导出的数据封装
-     * @param roles
-     * @return
+     * @param roles 查询到的角色
+     * @return 封装后的角色MAP
      */
     @SystemServiceLog(description = "数据封装")
     public List<Map<String, Object>> dataWrite(List<Role> roles) {

@@ -29,7 +29,7 @@ public class PropertiesUtil {
     /**
      * 读取属性
      * @param key  key
-     * @return
+     * @return 返回读取到的properties文件的值
      */
     public static String getProperty(String key){
         return properties.getProperty(key);

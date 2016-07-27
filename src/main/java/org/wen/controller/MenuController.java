@@ -38,7 +38,6 @@ public class MenuController {
     @ResponseBody
     @SystemControllerLog(description = "所有树列表")
     public List getAllTreeNode() {
-        List<Menu> list = menuService.getAllTreeNode();
-        return list;
+        return menuService.getAllTreeNode();
     }
 }

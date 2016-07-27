@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
@@ -14,12 +13,10 @@ import org.wen.dao.UserDao;
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 import org.wen.entity.User;
-import org.wen.section.SystemControllerLog;
 import org.wen.section.SystemServiceLog;
 import org.wen.service.UserService;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -127,34 +124,28 @@ public class UserServiceImpl implements UserService {
     public List<Map<String, Object>> queryMap(String ids) {
         if("quanbu".equals(ids)){
             List<User> users = userDao.findAll();
-            List<Map<String, Object>> original = dataWrite(users);
-            return original;
+            return dataWrite(users);
         }
         String userId = ids.substring(0,ids.lastIndexOf(","));
-        String[] id = ids.split(",");
+        String[] id = userId.split(",");
         ArrayList<Long> list = Lists.newArrayList();
         for(String number :id){
             list.add(Long.parseLong(number));
         }
         List<User> users = userDao.findByIds(list);
-        List<Map<String, Object>> original = dataWrite(users);
-        return original;
+        return dataWrite(users);
     }
     @SystemServiceLog(description = "批量添加用户")
     public void addUsers(List<User> users) {
         for(User user:users){
-            try {
-                userDao.reg(user);
-            } catch (Exception e) {
-                log.error("批量添加用户错误！错误为{}",e);
-            }
+            userDao.reg(user);
         }
     }
 
     /**
      * 用于Excel导出的数据封装
-     * @param users
-     * @return
+     * @param users 查询到的用户数据
+     * @return 封装后的用户数据
      */
     @SystemServiceLog(description = "数据封装")
     public List<Map<String, Object>> dataWrite(List<User> users) {
@@ -172,7 +163,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public static String getMd5(String base){
-        String md5 = DigestUtils.md5DigestAsHex(base.getBytes());
-        return md5;
+        return DigestUtils.md5DigestAsHex(base.getBytes());
     }
 }

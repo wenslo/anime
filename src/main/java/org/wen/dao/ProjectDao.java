@@ -10,5 +10,5 @@ import java.util.List;
  * 温海林
  */
 public interface ProjectDao {
-    public List<Project> findAll();
+     List<Project> findAll();
 }

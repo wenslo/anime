@@ -32,7 +32,7 @@ public class MailUtil {
     }
     /**
      * 获取session
-     * @return
+     * @return 返回发送邮件的Sesson
      */
     public static Session getSession(){
         //1.1构造一个保存用户名密码的Authenticator类

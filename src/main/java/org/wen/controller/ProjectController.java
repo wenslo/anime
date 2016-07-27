@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.wen.entity.Project;
@@ -27,7 +26,7 @@ public class ProjectController {
     @RequestMapping("/getProject")
     @ResponseBody
     @SystemControllerLog(description = "项目查询")
-    public List<Project> getProject(Model model){
+    public List<Project> getProject(){
         log.info("查询对应的项目名和ID");
         List<Project> list = projectService.getProject();
         log.debug("数据测试：{}",list.toString());

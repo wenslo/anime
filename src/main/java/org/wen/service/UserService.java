@@ -15,64 +15,64 @@ import java.util.Map;
 public interface UserService {
     /**
      * 注册用户，将用户名和密码保存入库
-     * @param name
-     * @param pwd
-     * @return
+     * @param name 用户名
+     * @param pwd 密码
+     * @return 注册结果
      */
-    public Result regUser(String name,String pwd) throws Exception;
+    Result regUser(String name,String pwd) throws Exception;
 
     /**
      * 用户index页面的登录功能
      * 2016年6月22日20:56:08
      * 温海林
-     * @param name
-     * @param pwd
-     * @return
+     * @param name 用户名
+     * @param pwd 密码
+     * @return 登录结果
      */
-    public Result login(String name, String pwd);
+    Result login(String name, String pwd);
 
     /**
      * 用户模块的分页
      * @param name 名字
      * @param page 页数
      * @param rows 行数
-     * @return
+     * @return 数据列表
      */
-    public DataGrid datagrid(String name,int page,int rows);
+    DataGrid datagrid(String name,int page,int rows);
 
     /**
      * 删除用户
-     * @param ids
-     * @return
+     * @param ids ID集合
+     * @return 删除数目
      */
-    public Result deleteUser(String ids);
+    Result deleteUser(String ids);
 
     /**
      * 查找用户
-     * @param id
-     * @return
+     * @param id ID集合
+     * @return 用户数据
      */
-    public Result findUser(Long id);
+    Result findUser(Long id);
 
     /**
      * 修改用户
      * @param id  ID
      * @param name 名字
      * @param pwd 密码
-     * @return
+     * @return 修改信息
      */
-    public Result updateUser(Long id, String name, String pwd);
+    Result updateUser(Long id, String name, String pwd);
 
     /**
      * 查找需要导出为iExcel的数据
-     * @param ids
-     * @return
+     * @param ids ID集合
+     * @return 封装后的数据
      */
-    public List<Map<String,Object>> queryMap(String ids);
+    List<Map<String,Object>> queryMap(String ids);
 
     /**
      * 导入Excel，批量添加
-     * @param users
+     * @param users 用户集合
      */
-    public void addUsers(List<User> users);
+    void addUsers(List<User> users);
 }

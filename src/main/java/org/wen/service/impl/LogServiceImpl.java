@@ -2,13 +2,10 @@ package org.wen.service.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wen.dao.LogDao;
+import org.wen.dao.RoleDao;
 import org.wen.dto.Result;
 import org.wen.entity.DataGrid;
 import org.wen.entity.Log;
@@ -19,14 +16,14 @@ import org.wen.service.LogService;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @Transactional
 public class LogServiceImpl implements LogService{
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Resource
     private LogDao logDao;
+    @Resource
+    private RoleDao roleDao;
     @SystemServiceLog(description = "日志列表")
     public DataGrid datagrid(String common,int page,int rows,User user) {
         DataGrid dg = new DataGrid();
@@ -37,6 +34,22 @@ public class LogServiceImpl implements LogService{
         params.put("userId",user.getId());
         List<Log> l = logDao.find(params);
         dg.setTotal(logDao.count(params));
+        dg.setRows(l);
+        return dg;
+    }
+    @SystemServiceLog(description = "查看下属的日志列表")
+    public DataGrid datagrid(String common,int page,int rows,User user,String otherLog) {
+        //先查出该用户属于那种角色，角色下的所有用户
+        Integer userId = user.getId();
+        List<Integer> userIds = roleDao.findLessUsers(userId);
+        DataGrid dg = new DataGrid();
+        Map<String, Object> params = Maps.newHashMap();
+        params.put("common",common);
+        params.put("page",rows*(page-1));
+        params.put("rows",rows);
+        params.put("userId",userIds);
+        List<Log> l = logDao.findOhter(params);
+        dg.setTotal(logDao.countOther(params));
         dg.setRows(l);
         return dg;
     }
@@ -77,18 +90,16 @@ public class LogServiceImpl implements LogService{
     public List<Map<String, Object>> queryMap(String ids) {
         if("quanbu".equals(ids)){
             List<Log> logs = logDao.findAll();
-            List<Map<String, Object>> original = dataWrite(logs);
-            return original;
+            return dataWrite(logs);
         }
         String userId = ids.substring(0,ids.lastIndexOf(","));
-        String[] id = ids.split(",");
+        String[] id = userId.split(",");
         ArrayList<Long> list = Lists.newArrayList();
         for(String number :id){
             list.add(Long.parseLong(number));
         }
         List<Log> logs = logDao.findByIds(list);
-        List<Map<String, Object>> original = dataWrite(logs);
-        return original;
+        return dataWrite(logs);
     }
     @SystemServiceLog(description = "根据ID查询日志")
     public Log getLog(String id) {

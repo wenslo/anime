@@ -1,19 +1,13 @@
 package org.wen.dto;
 
 /**
- * Created by wen on 2016/7/26.
+ * 数据库的表名和注释的实体类
+ * 2016年7月27日16:37:59
+ * @author 温海林
  */
 public class Table {
-    public String tableName;
+    private String tableName;
     private String common;
-
-    @Override
-    public String toString() {
-        return "Table{" +
-                "tableName='" + tableName + '\'' +
-                ", common='" + common + '\'' +
-                '}';
-    }
 
     public String getTableName() {
         return tableName;

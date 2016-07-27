@@ -34,9 +34,16 @@
         insert into user_mis_role (role_id,user_id) values ( #{roleId}, #{userId} )
     </insert>
     <delete id="deleteByUserId" parameterType="java.util.List">
-        delete from user_mis_role r where r.user_id in
+        delete from user_mis_role  where user_id in
         <foreach item="ids" index="index" collection="list" open="(" separator="," close=")">
             #{ids}
         </foreach>
     </delete>
+    <select id="findLessUsers" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select user_id from role r where r.user_id  in
+            (select m.user_id from user_mis_role m where m.role_id &lt;
+                (select role_id user_mis_role l where l.user_id = #{userId}
+                )
+            )
+    </select>
 </mapper>

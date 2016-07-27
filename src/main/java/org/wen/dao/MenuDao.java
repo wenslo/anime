@@ -12,25 +12,25 @@ public interface MenuDao {
      * 查询所有根节点
      * 2016年6月24日00:16:06
      * 温海林
-     * @return
+     * @return 返回根节点
      */
-    public List<Tmenu> findFirst();
+     List<Tmenu> findFirst();
 
     /**
      * 异步加载当前ID下的节点
-     * @param id
-     * @return
+     * @param id 父节点ID
+     * @return 父节点下的树列表
      */
-    public List<Tmenu> findByPid(String id);
+     List<Tmenu> findByPid(String id);
     /**
      * 根据ID找到节点
-     * @param id
-     * @return
+     * @param id 节点ID
+     * @return 节点内容
      */
-    public Tmenu findById(String id);
+     Tmenu findById(String id);
     /**
      * 查询所有菜单
-     * @return
+     * @return 所有节点
      */
-    public List<Tmenu> findAll();
+     List<Tmenu> findAll();
 }

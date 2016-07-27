@@ -1,70 +1,73 @@
 package org.wen.dao;
 
-import org.wen.entity.Log;
 import org.wen.entity.Role;
-import org.wen.entity.User;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by wen on 2016/7/19.
+ * 角色管理的DAO层，同时处理角色表和角色-用户中间表的数据
+ * 2016年7月27日16:19:16
+ * @author 温海林
  */
 public interface RoleDao {
     /**
      * 查询角色管理页面所需数据
-     *
-     * @param map
-     * @return
+     * @param map 查询条件
+     * @return 角色信息列表
      */
-    public List<Role> find(Map map);
+     List<Role> find(Map map);
 
     /**
      * 查询总数
-     *
-     * @param map
-     * @return
+     * @param map 查询条件
+     * @return 角色总数
      */
-    public Long count(Map map);
+     Long count(Map map);
 
     /**
      * 保存角色
-     * @param role
-     * @return
+     * @param role 角色信息
+     * @return 保存后角色的ID
      */
-    public int save(Role role);
+     int save(Role role);
 
     /**
      * 根据ID进行删除
-     * @param list
-     * @return
+     * @param list ID的集合
+     * @return 删除角色的总数
      */
-    public int deleteById(ArrayList<Long> list);
+     int deleteById(ArrayList<Long> list);
 
     /**
      * 查询角色表的所有信息
-     * @return
+     * @return 所有角色
      */
-    public List<Role> findAll();
+     List<Role> findAll();
 
     /**
      * 根据传入的ID对角色表进行搜索。
-     * @param list
-     * @return
+     * @param list ID集合
+     * @return 集合里ID的角色
      */
-    public List<Role> findByIds(ArrayList<Long> list);
+     List<Role> findByIds(ArrayList<Long> list);
 
     /**
      * 向角色与用户的中间表插入数据
-     * @param map
-     * @return
+     * @param map 用户数据
+     * @return 插入结果
      */
-    public int addMis(Map<String, Integer> map);
+     int addMis(Map<String, Integer> map);
 
     /**
      * 根据传入的用户ID，删除中间表中有关该用户的信息
-     * @return
+     * @return 删除条数
      */
-    public int deleteByUserId(ArrayList<Long> list);
+     int deleteByUserId(ArrayList<Long> list);
+
+    /**
+     * 根据传入的用户ID，找到对应的角色，然后找到比这个角色小的所有用户的Id
+     * @return 该用户对应的角色ID
+     */
+     List<Integer> findLessUsers(Integer userId);
 }

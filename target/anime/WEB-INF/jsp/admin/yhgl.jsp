@@ -325,10 +325,10 @@
                     var obj = jQuery.parseJSON(r);
                     if(obj.result == 1){
                         $('#jsp_admin_yhgl_datagrid').datagrid('load',{});
-                        $('#jsp_admin_yhgl_updateDialog').dialog('close');
+                        $('#jsp_admin_yhgl_roleDialog').dialog('close');
                     }
                     if(obj.result == 2){
-                        $('#jsp_admin_yhgl_updateDialog').dialog('close');
+                        $('#jsp_admin_yhgl_roleDialog').dialog('close');
                     }
                     $.messager.show({
                         title:'提示',

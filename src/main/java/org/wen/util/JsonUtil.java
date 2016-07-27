@@ -10,8 +10,7 @@ public class JsonUtil
 
 
     /**
-     * @MethodName : toJson
-     * @Description : 将对象转为JSON串，此方法能够满足大部分需求
+     * 对象转为JSON串，此方法能够满足大部分需求
      * @param src
      *            :将要被转化的对象
      * @return :转化后的JSON串

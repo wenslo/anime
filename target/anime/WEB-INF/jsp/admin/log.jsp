@@ -110,7 +110,18 @@
         handler:function(){
             excelExport();
         }
-      }
+      },'-',{
+            text:'查看下属日志',
+            iconCls:'icon-mini-refresh',
+            handler:function(){
+                alert("查看下属日志");
+                $('#jsp_admin_log_datagrid').datagrid('load',{
+                    common:$("#jsp_admin_log_searchForm_common").val(),
+                    otherLog:'2'
+                });
+
+            }
+        }
     ],
   });
   function append(){
@@ -174,7 +185,7 @@
 <div id="jsp_admin_log_layout" class="easyui-layout" data-options="fit:true,border:false">
   <div data-options="region:'north',title:'查询条件',border:false" style="height:100px;">
     <form id="jsp_admin_log_searchForm">
-      检测内容（可模糊查询）<input name="common"/>
+      检测内容（可模糊查询）<input id="jsp_admin_log_searchForm_common" name="common"/>
       <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
       <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="clearFun();">清空</a>
     </form>

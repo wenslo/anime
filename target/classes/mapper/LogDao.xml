@@ -7,7 +7,7 @@
                 select id,name,common,project_name as 'projectName',create_date as 'createDate',update_date as 'updateDate',state  from log l <include refid="log_search"/> limit #{page},#{rows}
         </select>
         <select id="count" parameterType="map" resultType="long">
-                select count(*) from log l
+                select count(*) from log l <include refid="log_search"/>
         </select>
         <insert id="save" parameterType="org.wen.entity.Log">
                 insert into log (name,common,project_name,create_date,state,user_id)
@@ -54,4 +54,25 @@
                         #{ids}
                 </foreach>
         </delete>
+        <!--<select id="findOther" parameterType="map" resultType="org.wen.entity.Log">
+                select id,name,common,project_name as 'projectName',create_date as 'createDate',update_date as 'updateDate',state  from log l
+                where user_id in
+                <foreach item="ids" index="index" collection="list" open="(" separator="," close=")">
+                        #{userId}
+                </foreach>
+                <if test="common != null and common != ''">
+                        and l.common like '%'||#{common}||'%'
+                </if>
+                limit #{page},#{rows}
+        </select>
+        <select id="countOther" parameterType="map" resultType="long">
+                select count(*) from log l where user_id in
+                <foreach item="ids" index="index" collection="list" open="(" separator="," close=")">
+                        #{userId}
+                </foreach>
+                <if test="common != null and common != ''">
+                        and l.common like '%'||#{common}||'%'
+                </if>
+                limit #{page},#{rows}
+        </select>-->
 </mapper>

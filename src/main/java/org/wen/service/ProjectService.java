@@ -10,5 +10,5 @@ import java.util.List;
  * 温海林
  */
 public interface ProjectService {
-    public List<Project> getProject();
+     List<Project> getProject();
 }

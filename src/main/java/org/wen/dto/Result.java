@@ -1,7 +1,9 @@
 package org.wen.dto;
 
 /**
- * Created by wen on 2016/6/19.
+ * Ajax结果类，向前台返回结果进行判断
+ * 2016年7月27日16:31:18
+ * @author 温海林
  */
 public class Result {
     private int result;
@@ -44,10 +46,4 @@ public class Result {
         this.data = data;
     }
 
-    public Result(int result, String message, Object data) {
-
-        this.result = result;
-        this.message = message;
-        this.data = data;
-    }
 }

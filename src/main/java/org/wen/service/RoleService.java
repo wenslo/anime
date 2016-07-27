@@ -15,44 +15,44 @@ import java.util.Map;
 public interface RoleService {
     /**
      * 角色列表的分页
-     * @param common
-     * @param page
-     * @param rows
-     * @return
+     * @param common 内容
+     * @param page 页数
+     * @param rows 行数
+     * @return 数据列表
      */
-    public DataGrid datagrid(String common, int page, int rows);
+    DataGrid datagrid(String common, int page, int rows);
 
     /**
      * 添加角色
-     * @param roleNumber
-     * @param roleName1
-     * @return
+     * @param roleNumber 角色数字
+     * @param roleName1 角色名称
+     * @return 添加结果
      */
-    public Result addRole(String roleNumber, String roleName1);
+    Result addRole(String roleNumber, String roleName1);
 
     /**
      * 删除角色
-     * @param ids
-     * @return
+     * @param ids 角色集合
+     * @return 删除结果
      */
-    public Result deleteRole(String ids);
+    Result deleteRole(String ids);
 
     /**
      * 导出Excel需要的数据，并进行封装
-     * @param ids
-     * @return
+     * @param ids 角色ID集合
+     * @return 数据列表
      */
-    public List<Map<String,Object>> queryMap(String ids);
+    List<Map<String,Object>> queryMap(String ids);
 
     /**
      * 查询所有的角色信息
-     * @return
+     * @return 角色LIST
      */
-    public List<Role> getRole();
+    List<Role> getRole();
 
     /**
      * 添加中间表数据，添加用户的角色
-     * @return
+     * @return 添加结果
      */
-    public Result addMis(String userId,String roleId);
+    Result addMis(String userId,String roleId);
 }

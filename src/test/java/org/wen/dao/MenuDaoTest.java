@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by wen on 2016/6/24.
+ * 测试DAO
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/spring-dao.xml"})
@@ -23,7 +23,7 @@ public class MenuDaoTest {
     private UserDao userDao;
     @Test
     public void testFindTable() throws Exception {
-        List<Table> tables = (List<Table>) userDao.findTable();
+        List<Table> tables = userDao.findTable();
         for (Table table :tables){
             System.out.println(table.toString()+"/t");
         }

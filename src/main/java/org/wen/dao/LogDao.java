@@ -1,10 +1,7 @@
 package org.wen.dao;
 
 import org.wen.entity.Log;
-import org.wen.entity.User;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,56 +11,70 @@ import java.util.Map;
 public interface LogDao {
     /**
      * 查询用户管理页面所需数据
-     * @param map
-     * @return
+     * @param map 查询数据，总数，页数，条件
+     * @return 返回日志的list
      */
-    public List<Log> find(Map map);
+     List<Log> find(Map map);
 
     /**
      * 查询总数
-     * @param map
-     * @return
+     * @param map 查询条件
+     * @return 日志总数
      */
-    public Long count(Map map);
+     Long count(Map map);
 
     /**
      * 添加日志
-     * @param log
-     * @return
+     * @param log 添加的日志对象
+     * @return 返回保存后的日志ID
      */
-    public int save(Log log);
+     int save(Log log);
 
     /**
      * 根据传入的ID删除日志
-     * @param list
-     * @return
+     * @param list 日志ID结果
+     * @return 删除的日志的数目
      */
-    public int deleteById(ArrayList<Long> list);
+     int deleteById(ArrayList<Long> list);
 
     /**
      * 查询所有数据
-     * @return
+     * @return 所有日志
      */
-    public List<Log> findAll();
+     List<Log> findAll();
 
     /**
      * 根据所选ID，查询所对应的数据
-     * @param list
-     * @return
+     * @param list 日志ID集合
+     * @return 日志
      */
-    public List<Log> findByIds(List<Long> list);
+     List<Log> findByIds(List<Long> list);
 
     /**
      * 根据所选ID查询出对应的详情
      * @param id 日志ID
-     * @return
+     * @return 日志
      */
-    public Log findById(int id);
+     Log findById(int id);
 
     /**
      * 根据用户ID删除对应数据库中的文章
-     * @param list
-     * @return
+     * @param list ID集合
+     * @return 删除条数
      */
-    public Integer deleteByUserId(List<Long> list);
+     Integer deleteByUserId(List<Long> list);
+
+    /**
+     * 查询下属的日志
+     * @param params 查询条件 ID集合
+     * @return 下属的日志
+     */
+     List<Log> findOhter(Map<String, Object> params);
+
+    /**
+     * 查询下属用户日志的总数
+     * @param params 查询条件 ID集合
+     * @return 下属日志的总数
+     */
+     Long countOther(Map<String, Object> params);
 }

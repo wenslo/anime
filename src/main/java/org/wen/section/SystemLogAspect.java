@@ -16,7 +16,6 @@ import org.wen.util.JsonUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
-import java.util.Objects;
 
 /**
  * 一个切点类
@@ -44,7 +43,7 @@ public class SystemLogAspect {
     /**
      * 前置通知，用于拦截Controller层记录用户的操作
      *
-     * @param joinPoint
+     * @param joinPoint 表示目标类连接点对象
      */
     @Before("controllerAspect()")
     public void doBefore(JoinPoint joinPoint) {
@@ -56,23 +55,23 @@ public class SystemLogAspect {
         String ip = request.getRemoteAddr();
         try {
             /*=============打印输出日志信息=============*/
-            logger.info("=============前置通知开始============");
-            logger.info("请求方法：{}", joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()");
-            logger.info("方法描述：{}", getControllerMethodDescription(joinPoint));
-            logger.info("请求人：{}", user.getName());
-            logger.info("请求IP：", ip);
-            logger.info("前置通知结束！");
+            logger.info("=============Controller层前置通知开始============");
+            logger.info("C---请求方法：{}", joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()");
+            logger.info("C---方法描述：{}", getControllerMethodDescription(joinPoint));
+            logger.info("C---请求人：{}", user.getName());
+            logger.info("C---请求IP：", ip);
+            logger.info("C---前置通知结束！");
         } catch (Exception e) {
-            logger.error("==前置异常通知==");
-            logger.error("异常信息：{}", e.getMessage());
+            logger.error("==C-前置异常通知==");
+            logger.error("C---异常信息：{}", e.getMessage());
         }
     }
 
     /**
      * 异常通知，用于拦截service层记录异常日志
      *
-     * @param joinPoint
-     * @param e
+     * @param joinPoint 表示目标类连接点对象
+     * @param e 异常
      */
     @AfterThrowing(pointcut = "serviceAspect()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
@@ -90,18 +89,18 @@ public class SystemLogAspect {
             }
         }
         try {
-            logger.info("=======异常通知开始=======");
-            logger.info("异常代码：{}", e.getClass().getName());
-            logger.info("异常信息：{}", e.getMessage());
-            logger.info("异常方法：{}", joinPoint.getClass().getName() + "." + joinPoint.getSignature().getName() + "()");
-            logger.info("方法描述", getServiceMthodDescription(joinPoint));
-            logger.info("请求人：{}", user.getName());
-            logger.info("请求IP：{}", ip);
-            logger.info("请求参数：{}", params);
+            logger.info("=======Service层异常通知开始=======");
+            logger.info("S---异常代码：{}", e.getClass().getName());
+            logger.info("S---异常信息：{}", e.getMessage());
+            logger.info("S---异常方法：{}", joinPoint.getClass().getName() + "." + joinPoint.getSignature().getName() + "()");
+            logger.info("S---方法描述", getServiceMthodDescription(joinPoint));
+            logger.info("S---请求人：{}", user.getName());
+            logger.info("S---请求IP：{}", ip);
+            logger.info("S---请求参数：{}", params);
             logger.info("===========异常通知结束==========");
         } catch (Exception e1) {
             logger.error("====一异常通知异常====");
-            logger.error("异常信息：{}", e1.getMessage());
+            logger.error("S---异常信息：{}", e1.getMessage());
         }
     }
 
