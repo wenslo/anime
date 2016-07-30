@@ -31,7 +31,7 @@ import java.util.Map;
 public class RoleController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    RoleService roleService;
+    private RoleService roleService;
     @RequestMapping(value = "/datagrid",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @SystemControllerLog(description = "角色列表")

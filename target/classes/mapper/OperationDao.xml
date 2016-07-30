@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wen.dao.OperationDao">
+        <select id="find" parameterType="map" resultType="org.wen.entity.Operation">
+                select id, user_name as 'userName',create_date as 'createDate',describe_common as 'describeCommon',method_name as 'methodName' from operation
+                limit #{page},#{rows}
+        </select>
+        <select id="count" resultType="long">
+                select count(*) from operation l
+        </select>
+        <insert id="save" parameterType="org.wen.entity.Operation">
+                insert into operation (user_name,create_date,describe_common,method_name)
+                values(#{userName},str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s'),#{describeCommon},#{methodName})
+        </insert>
+</mapper>

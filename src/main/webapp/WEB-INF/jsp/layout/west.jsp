@@ -11,7 +11,7 @@
               console.log(node);
               if(node.attributes.url){
                 var url = '${pageContext.request.contextPath}'+node.attributes.url;
-                addTab({title:node.text,href:url,closable:true});
+                addTab({title:node.text,href:url,closable:true,toolPosition:'right'});
               }
             }
             " style="margin-left: 5px"></ul>

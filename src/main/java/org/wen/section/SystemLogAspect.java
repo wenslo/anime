@@ -7,15 +7,20 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.wen.dao.OperationDao;
+import org.wen.entity.Operation;
 import org.wen.entity.User;
 import org.wen.util.JsonUtil;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
+import java.util.Date;
 
 /**
  * 一个切点类
@@ -27,7 +32,8 @@ import java.lang.reflect.Method;
 public class SystemLogAspect {
     private static final String USER = "user";
     private static final Logger logger = LoggerFactory.getLogger(SystemLogAspect.class);
-
+    @Resource
+    private OperationDao operationDao;
     //Service层切点
     @Pointcut("@annotation(org.wen.section.SystemServiceLog)")
     public void serviceAspect() {
@@ -60,6 +66,12 @@ public class SystemLogAspect {
             logger.info("C---方法描述：{}", getControllerMethodDescription(joinPoint));
             logger.info("C---请求人：{}", user.getName());
             logger.info("C---请求IP：", ip);
+            Operation o = new Operation();
+            o.setCreateDate(new Date());
+            o.setDescribeCommon("Controller-----"+getControllerMethodDescription(joinPoint));
+            o.setUserName(user.getName());
+            o.setMethodName("Controller-----"+joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()");
+            operationDao.save(o);
             logger.info("C---前置通知结束！");
         } catch (Exception e) {
             logger.error("==C-前置异常通知==");
@@ -98,6 +110,12 @@ public class SystemLogAspect {
             logger.info("S---请求IP：{}", ip);
             logger.info("S---请求参数：{}", params);
             logger.info("===========异常通知结束==========");
+            Operation o = new Operation();
+            o.setCreateDate(new Date());
+            o.setDescribeCommon("Service-----"+getServiceMthodDescription(joinPoint));
+            o.setUserName(user.getName());
+            o.setMethodName("Service-----"+joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()");
+            operationDao.save(o);
         } catch (Exception e1) {
             logger.error("====一异常通知异常====");
             logger.error("S---异常信息：{}", e1.getMessage());

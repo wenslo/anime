@@ -12,18 +12,21 @@ import org.wen.section.SystemControllerLog;
 @RequestMapping("/system")
 public class SystemController {
     @RequestMapping("/yhgl")
-    @SystemControllerLog(description = "用户管理页面")
+    @SystemControllerLog(description = "进入用户管理页面")
     public String index(){
         return "admin/yhgl";
     }
     @RequestMapping("/log")
-    @SystemControllerLog(description = "日志管理页面")
+    @SystemControllerLog(description = "进入日志管理页面")
     public String log(){
         return "admin/log";
     }
     @RequestMapping("/role")
-    @SystemControllerLog(description = "角色管理页面")
+    @SystemControllerLog(description = "进入角色管理页面")
     public String role(){
         return "admin/role";
     }
+    @RequestMapping("/operation")
+    @SystemControllerLog(description = "进入操作日志管理页面")
+    public String operation(){return "admin/operation";}
 }
