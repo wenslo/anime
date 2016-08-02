@@ -15,7 +15,6 @@ import org.wen.entity.DataGrid;
 import org.wen.entity.Role;
 import org.wen.section.SystemServiceLog;
 import org.wen.service.RoleService;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleDao roleDao;
     @Autowired
     public UserDao userDao;
-    @SystemServiceLog(description = "角色列表")
+//    @SystemServiceLog(description = "角色列表")
     public DataGrid datagrid(String common, int page, int rows) {
         DataGrid dg = new DataGrid();
         Map<String, Object> params = Maps.newHashMap();
@@ -43,7 +42,7 @@ public class RoleServiceImpl implements RoleService {
         dg.setRows(l);
         return dg;
     }
-    @SystemServiceLog(description = "角色添加")
+//    @SystemServiceLog(description = "角色添加")
     public Result addRole(String roleNumber, String roleName) {
         Result result = new Result();
         Role role = new Role(Integer.parseInt(roleNumber),roleName);
@@ -58,7 +57,7 @@ public class RoleServiceImpl implements RoleService {
         }
         return null;
     }
-    @SystemServiceLog(description = "角色删除")
+//    @SystemServiceLog(description = "角色删除")
     public Result deleteRole(String ids) {
         Result result = new Result();
         String[] id = ids.split(",");
@@ -71,7 +70,7 @@ public class RoleServiceImpl implements RoleService {
         result.setResult(1);
         return result;
     }
-    @SystemServiceLog(description = "Excel所需数据查询")
+//    @SystemServiceLog(description = "Excel所需数据查询")
     public List<Map<String, Object>> queryMap(String ids) {
         if("quanbu".equals(ids)){
             List<Role> users = roleDao.findAll();
@@ -86,11 +85,11 @@ public class RoleServiceImpl implements RoleService {
         List<Role> users = roleDao.findByIds(list);
         return dataWrite(users);
     }
-    @SystemServiceLog(description = "查询所有角色")
+//    @SystemServiceLog(description = "查询所有角色")
     public List<Role> getRole() {
         return roleDao.findAll();
     }
-    @SystemServiceLog(description = "设置角色，中间表插入数据")
+//    @SystemServiceLog(description = "设置角色，中间表插入数据")
     public Result addMis(String userId,String roleId) {
         Map<String,Integer> map = Maps.newHashMap();
         map.put("userId", Integer.parseInt(Preconditions.checkNotNull(userId)));
@@ -114,15 +113,38 @@ public class RoleServiceImpl implements RoleService {
      * @param roles 查询到的角色
      * @return 封装后的角色MAP
      */
-    @SystemServiceLog(description = "数据封装")
+//    @SystemServiceLog(description = "数据封装")
     public List<Map<String, Object>> dataWrite(List<Role> roles) {
         List<Map<String,Object>> original = Lists.newArrayList();
         for(Role r :roles){
             Map<String,Object > map = Maps.newHashMap();
             map.put("roleNumber",r.getRoleNumber());
-            map.put("name",r.getRoleName());
+            map.put("roleName",r.getRoleName());
             original.add(map);
         }
         return original;
+    }
+//    @SystemServiceLog(description = "验证输入角色的数字是否合法")
+    public Result checkRole(Long roleNumber) {
+        Result result = new Result();
+        //检测用户数字是否存在
+        int flag = roleDao.findRoleNumber(roleNumber);
+        if(flag>0){
+            //说明该数字存在
+            result.setResult(2);
+            result.setMessage("该角色数字已经存在！");
+            return result;
+        }
+        //检测用户是否是最大的
+        //判断已经存在的角色数字里面，有没有比它更大的，有的话返回false
+        flag = roleDao.checkNumber(roleNumber);
+        if(flag>0){
+            //说明该数字不是最大的
+            result.setResult(3);
+            result.setMessage("该角色数字不是最大的！");
+            return result;
+        }
+        result.setResult(1);
+        return result;
     }
 }

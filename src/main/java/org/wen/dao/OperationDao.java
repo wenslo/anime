@@ -3,6 +3,7 @@ package org.wen.dao;
 import org.wen.entity.DataGrid;
 import org.wen.entity.Operation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,4 +37,13 @@ public interface OperationDao {
      * @param o 日志信息
      */
     void save(Operation o);
+
+    /**
+     * 查询所有需要导出的数据
+     * 2016年8月1日23:21:37
+     * 温海林
+     * @return 数据集合
+     */
+    List<Operation> findAll();
+
 }

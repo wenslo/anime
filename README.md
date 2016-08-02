@@ -35,3 +35,7 @@ As you can see,the project use the framework has a spring springMVC MyBatis Mave
 ---
 - 2016-7-30 17:41:55
 - Add system log notes,let's show system log for user used.
+
+---
+- 2016-8-2 21:05:38
+- Add system log export

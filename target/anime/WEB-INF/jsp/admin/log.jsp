@@ -114,7 +114,6 @@
             text:'查看下属日志',
             iconCls:'icon-mini-refresh',
             handler:function(){
-                alert("查看下属日志");
                 $('#jsp_admin_log_datagrid').datagrid('load',{
                     common:$("#jsp_admin_log_searchForm_common").val(),
                     otherLog:'2'

@@ -20,7 +20,7 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
     @Resource
     private ProjectDao projectDao;
-    @SystemServiceLog(description = "查询所有项目")
+//    @SystemServiceLog(description = "查询所有项目")
     public List<Project> getProject() {
         return projectDao.findAll();
     }

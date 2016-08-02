@@ -70,4 +70,18 @@ public interface RoleDao {
      * @return 该用户对应的角色ID
      */
      List<Integer> findLessUsers(Integer userId);
+
+    /**
+     * 查找角色数字，根据传入的数字与数据库中进行对比
+     * @param roleNumber 角色数组
+     * @return 是否存在
+     */
+    int findRoleNumber(Long roleNumber);
+
+    /**
+     * 查找比该角色数字大的记录
+     * @param roleNumber 橘色数字
+     * @return 有的话返回大于0的数字，没有的话小于0
+     */
+    int checkNumber(Long roleNumber);
 }

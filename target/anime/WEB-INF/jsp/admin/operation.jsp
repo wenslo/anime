@@ -55,13 +55,22 @@
     toolbar:[
       {
         text:'刷新',
-        iconCls:'icon-add',
+        iconCls:'icon-mini-refresh',
         handler:function(){
           $('#jsp_admin_operation_datagrid').datagrid('load');
+        }
+      },{
+        text:'导出操作日志',
+        iconCls:'icon-filter',
+        handler:function(){
+          excelExport();
         }
       }
     ]
   });
+  function excelExport(){
+      document.location = "${pageContext.request.contextPath}/operation/excelExport";
+  }
 </script>
 <div id="jsp_admin_operation_layout" class="easyui-layout" data-options="fit:true,border:false">
   <div data-options="region:'center',border:false," style="height:200px;">

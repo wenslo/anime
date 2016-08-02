@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -85,11 +86,11 @@ public class RoleController {
         OutputStream os = res.getOutputStream();
         BufferedOutputStream bos;
         String sheetName = "角色信息";
-        String head = "角色编号,角色名称";
-        String key = "roleNumber,roleName";
+        String head = "角色名称,方法名称,方法描述,创建时间";
+        String key = "userName,methodName,describeCommon,createDate";
         String[] headMsg = head.split(",");
         String[] keys = key.split(",");
-        String fileName = "角色信息表";
+        String fileName = "operation";
         try {
             List<Map<String,Object>> maps = roleService.queryMap(ids);
             res.setHeader("Content-disposition",
@@ -104,5 +105,11 @@ public class RoleController {
                 os.close();
             }
         }
+    }
+    @RequestMapping(value = "{roleNumber}/checkNumber",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @SystemControllerLog(description = "验证用户数字")
+    public Result showUpdateUser(@PathVariable Long roleNumber){
+        return roleService.checkRole(roleNumber);
     }
 }

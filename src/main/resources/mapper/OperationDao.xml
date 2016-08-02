@@ -14,4 +14,7 @@
                 insert into operation (user_name,create_date,describe_common,method_name)
                 values(#{userName},str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s'),#{describeCommon},#{methodName})
         </insert>
+        <select id="findAll" resultType="org.wen.entity.Operation">
+            select id, user_name as 'userName',create_date as 'createDate',describe_common as 'describeCommon',method_name as 'methodName' from operation
+        </select>
 </mapper>

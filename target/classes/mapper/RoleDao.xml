@@ -46,4 +46,10 @@
                 )
             )
     </select>
+    <select id="findRoleNumber" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(*) from role r where r.role_number = #{_parameter}
+    </select>
+    <select id="checkNumber" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(*) from role r where r.role_number &gt; #{_parameter}
+    </select>
 </mapper>

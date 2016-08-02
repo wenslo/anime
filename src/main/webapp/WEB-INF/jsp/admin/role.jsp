@@ -128,6 +128,25 @@
   function searchFun(){
     $("#jsp_admin_role_datagrid").datagrid('load',serializeObject($('#jsp_admin_role_searchForm')));
   }
+  function checkNumber(){
+      var roleNumber = $("#jsp_admin_role_roleNumber").val();
+      $.ajax({
+          url : '${pageContext.request.contextPath}/role/'+roleNumber+'/checkNumber',
+          type:'POST',
+          dataType:'json',
+          success:function(r){
+              var n = r.result;
+              if(n==2){
+                  $.messager.alert("提示","对不起，该角色数字已经存在")
+                  $("#jsp_admin_role_addDiarole").datagrid("close");
+              }
+              if(n==3){
+                  $.messager.alert("提示","对不起，角色数字必须递增");
+                  $("#jsp_admin_role_addDiarole").dialog("close");
+              }
+          }
+      });
+  }
 </script>
 <div id="jsp_admin_role_layout" class="easyui-layout" data-options="fit:true,border:false">
   <div data-options="region:'center',border:false," style="height:200px;">
@@ -169,7 +188,7 @@
     <table>
         <tr>
             <th>角色编号</th>
-            <td><input id="jsp_admin_role_roleNumber" name="roleNumber" class="easyui-validatebox" data-options="required:true"/></td>
+            <td><input id="jsp_admin_role_roleNumber" name="roleNumber" onblur="checkNumber();" class="easyui-validatebox"  data-options="required:true"/></td>
             <th>角色名称</th>
             <td><input id="jsp_admin_role_roleName" name="roleName" class="easyui-validatebox" data-options="required:true"/></td>
         </tr>

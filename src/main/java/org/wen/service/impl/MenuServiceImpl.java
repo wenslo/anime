@@ -21,7 +21,7 @@ import java.util.*;
 public class MenuServiceImpl implements MenuService{
     @Resource
     private MenuDao menuDao;
-    @SystemServiceLog(description = "查询所有树节点")
+//    @SystemServiceLog(description = "查询所有树节点")
     public List<Menu> getTreeNode(String id) {
         List<Menu> n1 = new ArrayList<Menu>();
         List<Tmenu> l;

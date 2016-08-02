@@ -55,4 +55,13 @@ public interface RoleService {
      * @return 添加结果
      */
     Result addMis(String userId,String roleId);
+
+    /**
+     * 验证角色数字。判断其是否合法
+     * 2016年7月31日22:40:12
+     * 温海林
+     * @param roleNumber 角色数字
+     * @return 返回判断结果
+     */
+    Result checkRole(Long roleNumber);
 }

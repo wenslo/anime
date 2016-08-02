@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     private LogDao logDao;
     @Resource
     private RoleDao roleDao;
-    @SystemServiceLog(description = "用户注册")
+//    @SystemServiceLog(description = "用户注册")
     public Result regUser(String name, String pwd) throws Exception{
         Result result = new Result();
         User user = new User(name,getMd5(pwd));
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
-    @SystemServiceLog(description = "用户登录")
+//    @SystemServiceLog(description = "用户登录")
     public Result login(String name, String pwd) {
         Result result = new Result();
         User user = new User(name,getMd5(pwd));
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
-    @SystemServiceLog(description = "用户列表")
+//    @SystemServiceLog(description = "用户列表")
     public DataGrid datagrid(String name,int page,int rows) {
         DataGrid dg = new DataGrid();
         Map<String, Object> params = new HashMap<String, Object>();
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
         dg.setRows(l);
         return dg;
     }
-    @SystemServiceLog(description = "用户删除")
+//    @SystemServiceLog(description = "用户删除")
     public Result deleteUser(String ids) {
         Result result = new Result();
         String[] id = ids.split(",");
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
         result.setResult(1);
         return result;
     }
-    @SystemServiceLog(description = "用户查询")
+//    @SystemServiceLog(description = "用户查询")
     public Result findUser(Long id) {
         Result result = new Result();
         User user = userDao.findById(id);
@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
         result.setData(user);
         return result;
     }
-    @SystemServiceLog(description = "用户修改")
+//    @SystemServiceLog(description = "用户修改")
     public Result updateUser(Long id, String name, String pwd) {
         Result result = new Result();
         try {
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
-    @SystemServiceLog(description = "查询Excel需要的数据")
+//    @SystemServiceLog(description = "查询Excel需要的数据")
     public List<Map<String, Object>> queryMap(String ids) {
         if("quanbu".equals(ids)){
             List<User> users = userDao.findAll();
@@ -135,7 +135,7 @@ public class UserServiceImpl implements UserService {
         List<User> users = userDao.findByIds(list);
         return dataWrite(users);
     }
-    @SystemServiceLog(description = "批量添加用户")
+//    @SystemServiceLog(description = "批量添加用户")
     public void addUsers(List<User> users) {
         for(User user:users){
             userDao.reg(user);
@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService {
      * @param users 查询到的用户数据
      * @return 封装后的用户数据
      */
-    @SystemServiceLog(description = "数据封装")
+//    @SystemServiceLog(description = "数据封装")
     public List<Map<String, Object>> dataWrite(List<User> users) {
         List<Map<String,Object>> original = new ArrayList<Map<String, Object>>();
         for(User u :users){
