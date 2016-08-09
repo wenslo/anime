@@ -3,6 +3,7 @@ package org.wen.service.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wen.dao.MenuDao;
+import org.wen.entity.DataGrid;
 import org.wen.entity.Menu;
 import org.wen.entity.Tmenu;
 import org.wen.section.SystemServiceLog;
@@ -71,5 +72,16 @@ public class MenuServiceImpl implements MenuService{
             }
         }
         return n1;
+    }
+
+    public DataGrid datagrid(int page, int rows) {
+        DataGrid dg = new DataGrid();
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("page",rows*(page-1));
+        params.put("rows",rows);
+        List<Tmenu> l = menuDao.find(params);
+        dg.setTotal(menuDao.count(params));
+        dg.setRows(l);
+        return dg;
     }
 }

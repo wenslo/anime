@@ -29,4 +29,7 @@ public class SystemController {
     @RequestMapping("/operation")
     @SystemControllerLog(description = "进入操作日志管理页面")
     public String operation(){return "admin/operation";}
+    @RequestMapping("/menu")
+    @SystemControllerLog(description = "进入菜单管理页面")
+    public String menu(){return "admin/menu";}
 }

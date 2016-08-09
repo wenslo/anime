@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.wen.entity.DataGrid;
 import org.wen.entity.Menu;
 import org.wen.section.SystemControllerLog;
 import org.wen.service.MenuService;
@@ -39,5 +41,12 @@ public class MenuController {
     @SystemControllerLog(description = "所有树列表")
     public List getAllTreeNode() {
         return menuService.getAllTreeNode();
+    }
+
+    @RequestMapping(value = "/datagrid",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @SystemControllerLog(description = "进入菜单管理列表页")
+    public DataGrid datagrid(String name,int page,int rows){
+        return menuService.datagrid(page,rows);
     }
 }

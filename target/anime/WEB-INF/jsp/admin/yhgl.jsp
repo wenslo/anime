@@ -304,9 +304,9 @@
         </table>
     </form>
 </div>
-<div id="jsp_admin_yhgl_upload_excel" data-options="closed:true,modal:true" class="easyui-dialog" style="width: 418px;height: 102px;">
+<div id="jsp_admin_yhgl_upload_excel" data-options="closed:true,modal:true,title:'文件上传'" class="easyui-dialog" style="width: 418px;height: 102px;">
     <form id="questionTypesManage"  method="post" enctype="multipart/form-data">
-       <nobr> 选择文件：　<input id="uploadExcel" name="uploadExcel" class="easyui-filebox" style="width:200px" data-options="prompt:'请选择文件...'">
+       <nobr> 选择文件：　<input id="uploadExcel" name="uploadExcel" class="easyui-filebox" style="width:200px" data-options="prompt:'请选择文件...',buttonText:'选择文件'">
 
         　　<a href="#" class="easyui-linkbutton" style="width:122px;float:right" onclick="uploadFile()"  >导入用户</a> 　　     　　　　　
        </nobr>

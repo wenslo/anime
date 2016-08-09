@@ -15,4 +15,10 @@
     <select id="findAll"  resultType="org.wen.entity.Tmenu">
         select * from Tmenu t
     </select>
+    <select id="find" parameterType="map" resultType="org.wen.entity.Tmenu">
+        select id,pid,text,url from tmenu limit #{page},#{rows}
+    </select>
+    <select id="count" parameterType="map" resultType="long">
+        select count(*) from tmenu
+    </select>
 </mapper>
